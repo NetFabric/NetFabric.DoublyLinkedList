@@ -34,13 +34,29 @@ outputs
 4
 ```
 
-## Reverse() method
+## `Reverse()` and `ReverseInPlace()` methods
 
-`Reverse()` reverses the list items in-place. It flips the internal node references with no memory allocations.
+`Reverse()` returns another `DoubleLinkedList<T>` instance with the same items but in reverse order. 
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
-list.Reverse();
+var reversed = list.Reverse();
+foreach (var item in reversed.EnumerateForward())
+	Console.WriteLine(item);
+```
+outputs
+```
+4
+3
+2
+1
+```
+
+`ReverseInPlace()` reverses the list items in-place. It flips the internal node references with no memory allocations.
+
+```csharp
+var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
+list.ReverseInPlace();
 foreach (var item in list.EnumerateForward())
 	Console.WriteLine(item);
 ```

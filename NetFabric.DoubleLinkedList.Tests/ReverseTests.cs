@@ -22,15 +22,30 @@ namespace NetFabric.DoubleLinkedList.Tests
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
+
+            // Act
+            var result = list.Reverse();
+
+            // Assert
+            result.EnumerateForward().Should().Equal(expected);
+            result.EnumerateReversed().Should().Equal(collection);
+        }
+
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void ReverseInPlace(IEnumerable<int> collection, IEnumerable<int> expected)
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
-            list.Reverse();
+            list.ReverseInPlace();
 
             // Assert
             list.Version.Should().NotBe(version);
             list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(expected.Reverse());
+            list.EnumerateReversed().Should().Equal(collection);
         }
     }
 }

@@ -407,7 +407,13 @@ namespace NetFabric
             version++;
         }
 
-        public void Reverse()
+        public DoubleLinkedList<T> Clone() =>
+            new DoubleLinkedList<T>(this.EnumerateForward());
+
+        public DoubleLinkedList<T> Reverse() =>
+            new DoubleLinkedList<T>(this.EnumerateReversed());
+
+        public void ReverseInPlace()
         {
             Node temp;
             var current = head;
