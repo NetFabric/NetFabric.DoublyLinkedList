@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
-namespace NetFabric.DoubleLinkedList.Tests
+namespace NetFabric.Tests
 {
     public class ReverseEnumerationTests
     {

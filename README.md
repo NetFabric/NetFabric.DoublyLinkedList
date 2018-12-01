@@ -13,21 +13,18 @@ The public API has the following changes:
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
 foreach (var item in list.EnumerateReversed())
-	Console.WriteLine(item);
+	Console.Write(item);
 ```
 outputs
 ```
-4
-3
-2
-1
+4321
 ```
 
 These can also be used with [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/):
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
-Console.WriteLine(list.EnumerateReversed().First());
+Console.Write(list.EnumerateReversed().First());
 ```
 outputs
 ```
@@ -36,20 +33,17 @@ outputs
 
 ## `Reverse()` and `ReverseInPlace()` methods
 
-`Reverse()` returns another `DoubleLinkedList<T>` instance with the same items but in reverse order. 
+`Reverse()` returns a `DoubleLinkedList<T>` instance with the same items but in reverse order. 
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
 var reversed = list.Reverse();
 foreach (var item in reversed.EnumerateForward())
-	Console.WriteLine(item);
+	Console.Write(item);
 ```
 outputs
 ```
-4
-3
-2
-1
+4321
 ```
 
 `ReverseInPlace()` reverses the list items in-place. It flips the internal node references with no memory allocations.
@@ -58,12 +52,43 @@ outputs
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
 list.ReverseInPlace();
 foreach (var item in list.EnumerateForward())
-	Console.WriteLine(item);
+	Console.Write(item);
+```
+also outputs
+```
+4321
+```
+
+## `Append()` and `AppendInPlace()` methods
+
+`Append()` returns a `DoubleLinkedList<T>` instance with the items of both lists appended. 
+
+```csharp
+var list = DoubleLinkedList.Append(
+	new DoubleLinkedList<int>(new[] {1, 2, 3, 4}), 
+	new DoubleLinkedList<int>(new[] {5, 6, 7, 8}));
+foreach (var item in list.EnumerateForward())
+	Console.Write(item);
 ```
 outputs
 ```
-4
-3
-2
-1
+12345678
+```
+
+`AppendInPlace()` also appends the two lists but without memory allocation. It reuses the nodes of the two lists. This also means the two lists are emptied of all its items.
+
+It also has optional boolean parameters that allow the efficient reverse of the input lists while appended.
+
+
+```csharp
+var list = DoubleLinkedList.AppendInPlace(
+	new DoubleLinkedList<int>(new[] {1, 2, 3, 4}), 
+	new DoubleLinkedList<int>(new[] {5, 6, 7, 8})
+	true, false);
+foreach (var item in list.EnumerateForward())
+	Console.Write(item);
+```
+outputs
+```
+43215678
 ```

@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using Xunit;
 
-namespace NetFabric.DoubleLinkedList.Tests
+namespace NetFabric.Tests
 {
     public class ReverseTests
     {
@@ -43,7 +43,10 @@ namespace NetFabric.DoubleLinkedList.Tests
             list.ReverseInPlace();
 
             // Assert
-            list.Version.Should().NotBe(version);
+            if(list.Count < 2)
+                list.Version.Should().Be(version);
+            else
+                list.Version.Should().NotBe(version);
             list.EnumerateForward().Should().Equal(expected);
             list.EnumerateReversed().Should().Equal(collection);
         }
