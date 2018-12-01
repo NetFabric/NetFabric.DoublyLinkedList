@@ -5,7 +5,7 @@
     <PackageId>NetFabric.DoubleLinkedList</PackageId>
     <Title>NetFabric.DoubleLinkedList</Title>
     <Description>An alternative to LinkedList&lt;T&gt; with reverse operation and enumeration without allocation.</Description>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Antão Almada</Authors>
     <Copyright>Copyright 2018 Antão Almada</Copyright>
     <RepositoryUrl>https://github.com/NetFabric/NetFabric.DoubleLinkedList</RepositoryUrl>
@@ -16,7 +16,10 @@
     <LangVersion>latest</LangVersion>
     <Features>strict</Features>
     <RootNamespace>NetFabric</RootNamespace>
-    <PackageReleaseNotes>Added Reverse(), ReverseInPlace(), Append() and AppendInPlace() methods.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      - Added Reverse(), ReverseInPlace(), Append() and AppendInPlace() methods.
+      - Added support for .NET 4.5.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
