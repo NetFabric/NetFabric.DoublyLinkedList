@@ -2,6 +2,12 @@
 
 An alternative to the [`System.Collections.Generic.LinkedList<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1) with reverse operation and enumeration without allocation.
 
+![constructor performance](https://user-images.githubusercontent.com/534533/49405396-38f4ad80-f74a-11e8-9162-22abd8fc4c00.png)
+
+![forward enumeration performance](https://user-images.githubusercontent.com/534533/49405413-40b45200-f74a-11e8-9b63-4ac67efd144d.png)
+
+![reverse enumeration performance](https://user-images.githubusercontent.com/534533/49405544-a43e7f80-f74a-11e8-9aba-544cb3141e33.png)
+
 The public API is very similar but the internals are very different with a more efficient implementation.
 
 The public API has the following changes:
@@ -92,3 +98,4 @@ outputs
 ```
 43215678
 ```
+

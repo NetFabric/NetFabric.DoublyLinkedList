@@ -29,15 +29,27 @@ namespace NetFabric
 
             public struct Enumerator : IEnumerator<T>
             {
+                enum State
+                {
+                    Normal,
+                    First,
+                    Empty,
+                }
+
                 readonly DoubleLinkedList<T> list;
                 readonly int version;
                 Node current;
+                State state;
 
                 internal Enumerator(DoubleLinkedList<T> list)
                 {
                     this.list = list;
                     version = list.version;
-                    current = null;
+                    current = list.tail;
+                    if (list.IsEmpty)
+                        state = State.Empty;
+                    else
+                        state = State.First;
                 }
 
                 public T Current => 
@@ -51,17 +63,17 @@ namespace NetFabric
                     if (version != list.version)
                         throw new InvalidOperationException();
 
-                    if (current is null)
+                    switch (state)
                     {
-                        current = list.tail;
-                        return !(current is null);
+                        case State.Normal:
+                            current = current.Previous;
+                            return !(current is null);
+                        case State.First:
+                            state = State.Normal;
+                            return true;
+                        default:
+                            return false;
                     }
-
-                    if (current.Previous is null)
-                        return false;
-
-                    current = current.Previous;
-                    return true;
                 }
 
                 public void Reset()
@@ -69,7 +81,11 @@ namespace NetFabric
                     if (version != list.version)
                         throw new InvalidOperationException();
 
-                    current = null;
+                    current = list.tail;
+                    if (list.IsEmpty)
+                        state = State.Empty;
+                    else
+                        state = State.First;
                 }
 
                 public void Dispose()

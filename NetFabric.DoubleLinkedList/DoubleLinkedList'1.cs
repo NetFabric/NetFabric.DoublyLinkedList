@@ -5,8 +5,6 @@ namespace NetFabric
 {
     public sealed partial class DoubleLinkedList<T>
     {
-        public readonly static DoubleLinkedList<T> Empty = new DoubleLinkedList<T>();
-        
         internal Node head;
         internal Node tail;
         int count;
@@ -40,6 +38,9 @@ namespace NetFabric
 
         internal int Version =>
             version;
+
+        public bool IsEmpty =>
+            head is null;
 
         void ValidateNode(Node node)
         {
@@ -93,9 +94,9 @@ namespace NetFabric
                 Next = head,
                 Previous = null,
             };
-            if (tail is null)
+            if (IsEmpty)
                 tail = result;
-            if (!(head is null))
+            else
                 head.Previous = result;
             head = result;
             count++;
@@ -135,19 +136,19 @@ namespace NetFabric
                 }
             }
 
-            if (!(tempHead is null))
+            if (tempHead is null)
+                return;
+
+            if (IsEmpty)
             {
-                if (head is null)
-                {
-                    head = tempHead;
-                    tail = tempTail;
-                }
-                else
-                {
-                    head.Previous = tempTail;
-                    tempTail.Next = head;
-                    head = tempHead;
-                }
+                head = tempHead;
+                tail = tempTail;
+            }
+            else
+            {
+                head.Previous = tempTail;
+                tempTail.Next = head;
+                head = tempHead;
             }
             version++;
         }
@@ -161,9 +162,9 @@ namespace NetFabric
                 Next = null,
                 Previous = tail,
             };
-            if (head is null)
+            if (IsEmpty)
                 head = result;
-            if (!(tail is null))
+            else
                 tail.Next = result;
             tail = result;
             count++;
@@ -203,19 +204,19 @@ namespace NetFabric
                 }
             }
 
-            if (!(tempHead is null))
+            if (tempHead is null)
+                return;
+
+            if (IsEmpty)
             {
-                if (tail is null)
-                {
-                    head = tempHead;
-                    tail = tempTail;
-                }
-                else
-                {
-                    tail.Next = tempHead;
-                    tempHead.Previous = tail;
-                    tail = tempTail;
-                }
+                head = tempHead;
+                tail = tempTail;
+            }
+            else
+            {
+                tail.Next = tempHead;
+                tempHead.Previous = tail;
+                tail = tempTail;
             }
             version++;
         }
@@ -225,7 +226,7 @@ namespace NetFabric
             var current = head;
             while (!(current is null))
             {
-                Node temp = current;
+                var temp = current;
                 current = current.Next;
                 temp.Invalidate();
             }
@@ -380,7 +381,7 @@ namespace NetFabric
 
         public void RemoveFirst()
         {
-            if (head is null)
+            if (IsEmpty)
                 throw new InvalidOperationException();
 
             var node = head;
@@ -401,7 +402,7 @@ namespace NetFabric
 
         public void RemoveLast()
         {
-            if (tail is null)
+            if (IsEmpty)
                 throw new InvalidOperationException();
 
             var node = tail;

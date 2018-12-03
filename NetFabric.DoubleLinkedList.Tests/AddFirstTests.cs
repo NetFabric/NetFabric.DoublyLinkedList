@@ -16,18 +16,18 @@ namespace NetFabric.Tests
                 { new int[] { 2, 3, 4, 5 }, 1, new int[] { 1, 2, 3, 4, 5 } },
             };
 
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>, IReadOnlyCollection<int>> CollectionData =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>, IReadOnlyCollection<int>>
+        public static TheoryData<IEnumerable<int>, IEnumerable<int>, bool, IReadOnlyCollection<int>> CollectionData =>
+            new TheoryData<IEnumerable<int>, IEnumerable<int>, bool, IReadOnlyCollection<int>>
             {
-                { new int[] { },                new int[] { },                  new int[] { } },
-                { new int[] { },                new int[] { 1 },                new int[] { 1 } },
-                { new int[] { },                new int[] { 1, 2, 3, 4, 5 },    new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1 },              new int[] { },                  new int[] { 1 } },
-                { new int[] { 2 },              new int[] { 1 },                new int[] { 1, 2 } },
-                { new int[] { 5 },              new int[] { 1, 2, 3, 4 },       new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 2, 3, 4, 5 },     new int[] { 1 },                new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 3, 4, 5 },        new int[] { 1, 2 },             new int[] { 1, 2, 3, 4, 5 } },
+                { new int[] { },                new int[] { },                  false,  new int[] { } },
+                { new int[] { },                new int[] { 1 },                true,   new int[] { 1 } },
+                { new int[] { },                new int[] { 1, 2, 3, 4, 5 },    true,   new int[] { 1, 2, 3, 4, 5 } },
+                { new int[] { 1 },              new int[] { },                  false,  new int[] { 1 } },
+                { new int[] { 2 },              new int[] { 1 },                true,   new int[] { 1, 2 } },
+                { new int[] { 5 },              new int[] { 1, 2, 3, 4 },       true,   new int[] { 1, 2, 3, 4, 5 } },
+                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  false,  new int[] { 1, 2, 3, 4, 5 } },
+                { new int[] { 2, 3, 4, 5 },     new int[] { 1 },                true,   new int[] { 1, 2, 3, 4, 5 } },
+                { new int[] { 3, 4, 5 },        new int[] { 1, 2 },             true,   new int[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -50,7 +50,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(CollectionData))]
-        void AddCollection(IEnumerable<int> collection, IEnumerable<int> items, IReadOnlyCollection<int> expected)
+        void AddCollection(IEnumerable<int> collection, IEnumerable<int> items, bool isMutated, IReadOnlyCollection<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -61,7 +61,10 @@ namespace NetFabric.Tests
 
             // Assert
             list.Count.Should().Be(expected.Count);
-            list.Version.Should().NotBe(version);
+            if (isMutated)
+                list.Version.Should().NotBe(version);
+            else
+                list.Version.Should().Be(version);
             list.EnumerateForward().Should().Equal(expected);
             list.EnumerateReversed().Should().Equal(expected.Reverse());
         }
