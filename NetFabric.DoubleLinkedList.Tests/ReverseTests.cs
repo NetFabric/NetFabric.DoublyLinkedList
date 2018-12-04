@@ -27,6 +27,8 @@ namespace NetFabric.Tests
             var result = list.Reverse();
 
             // Assert
+            result.Version.Should().Be(0);
+            result.Count.Should().Be(list.Count);
             result.EnumerateForward().Should().Equal(expected);
             result.EnumerateReversed().Should().Equal(collection);
         }
@@ -47,6 +49,7 @@ namespace NetFabric.Tests
                 list.Version.Should().Be(version);
             else
                 list.Version.Should().NotBe(version);
+            list.Count.Should().Be(list.Count);
             list.EnumerateForward().Should().Equal(expected);
             list.EnumerateReversed().Should().Equal(collection);
         }
