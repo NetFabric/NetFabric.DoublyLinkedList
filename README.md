@@ -1,5 +1,7 @@
 # NetFabric.DoubleLinkedList
 
+![GitHub last commit (master)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.DoubleLinkedList/master.svg?logo=github&logoColor=lightgray&style=popout-square)[![Nuget](https://img.shields.io/nuget/dt/NetFabric.DoubleLinkedList.svg?logo=nuget&logoColor=lightgray&style=popout-square)](https://www.nuget.org/packages/NetFabric.DoubleLinkedList/)
+
 An alternative to the [`System.Collections.Generic.LinkedList<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1) with reverse operation and enumeration without allocation.
 
 The public API is very similar but the internals are very different with a more efficient implementation. 
@@ -16,7 +18,7 @@ New overrides and methods were added to minimizing the memory allocations, numbe
 
 ## Forward and reverse enumeration
 
-`DoubleLinkedList<T>` does not  implement `IEnumerable<T>`. Call the methods `EnumerateForward()` or `EnumerateReversed()` to get an enumerator that goes in the direction you require without performing any changes to the list.
+`DoubleLinkedList<T>` does not implement `IEnumerable<T>`. Call the methods `EnumerateForward()` or `EnumerateReversed()` to get an enumerator that goes in the direction you require.
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
@@ -28,7 +30,7 @@ outputs
 4321
 ```
 
-These can also be used with [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/):
+Although these enumerators are optimized for performance, they perform a bit more method calls and conditions than simply using a `while` loop to go throught the `Node` references. The performance penalty can be seen on the benchmarks above. The advantage is that these can be used with [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) or any third-party method that takes `IEnumerable`, `IEnumerable<T>` or `IReadOnlyCollection<T>` as parameter.
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
@@ -43,7 +45,7 @@ outputs
 
 These methods now support the addition of a `IEnumerable<T>` or another `DoubleLinkedList<T>`. 
 
-When case the parameter is a `DoubleLinkedList<T>`, it can be added reversed.
+When the parameter is a `DoubleLinkedList<T>`, it can be added reversed.
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});
@@ -61,7 +63,7 @@ outputs
 
 ## `AddFirstFrom()` and `AddLastFrom()`
 
-These methods perform the addition of a `DoubleLinkedList<T>` but moving the nodes into the other `DoubleLinkedList<T>`. No memory allocations and copies are performed.
+These methods perform the addition of a `DoubleLinkedList<T>` but moving the nodes into the other `DoubleLinkedList<T>`. No memory allocations and copies of values are performed.
 
 The `DoubleLinkedList<T>` passed as parameter becomes empty.
 
