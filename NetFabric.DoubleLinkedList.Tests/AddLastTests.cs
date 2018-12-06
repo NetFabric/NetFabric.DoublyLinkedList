@@ -102,6 +102,28 @@ namespace NetFabric.Tests
             var right = new DoubleLinkedList<int>(items);
 
             // Act
+            left.AddLast(right, reverse);
+
+            // Assert
+            left.Count.Should().Be(expected.Count);
+            if (isMutated)
+                left.Version.Should().NotBe(version);
+            else
+                left.Version.Should().Be(version);
+            left.EnumerateForward().Should().Equal(expected);
+            left.EnumerateReversed().Should().Equal(expected.Reverse());
+        }
+
+        [Theory]
+        [MemberData(nameof(ListData))]
+        void AddListFrom(IEnumerable<int> collection, IEnumerable<int> items, bool reverse, bool isMutated, IReadOnlyCollection<int> expected)
+        {
+            // Arrange
+            var left = new DoubleLinkedList<int>(collection);
+            var version = left.Version;
+            var right = new DoubleLinkedList<int>(items);
+
+            // Act
             left.AddLastFrom(right, reverse);
 
             // Assert
