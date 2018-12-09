@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class RemoveTests
     {
-        public static TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>> RemoveItemData =>
-            new TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveItemData =>
+            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
             {
                 { new int[] { },                1, false,   new int[] { } },
                 { new int[] { 1 },              2, false,   new int[] { 1 } },
@@ -20,14 +20,14 @@ namespace NetFabric.Tests
                 { new int[] { 1, 2, 3, 4, 5 },  5, true,    new int[] { 1, 2, 3, 4 } },
             };
 
-        public static TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>> RemoveFirstItemData =>
-            new TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveFirstItemData =>
+            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
             {
                 { new int[] { 1, 2, 3, 4, 5, 1 },  1, true, new int[] { 2, 3, 4, 5, 1 } },
             };
 
-        public static TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>> RemoveLastItemData =>
-            new TheoryData<IEnumerable<int>, int, bool, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveLastItemData =>
+            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
             {
                 { new int[] { 1, 2, 3, 4, 5, 1 },  1, true, new int[] { 1, 2, 3, 4, 5 } },
             };
@@ -35,7 +35,7 @@ namespace NetFabric.Tests
         [Theory]
         [MemberData(nameof(RemoveItemData))]
         [MemberData(nameof(RemoveFirstItemData))]
-        void RemoveItem(IEnumerable<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
+        void RemoveItem(IReadOnlyList<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -58,7 +58,7 @@ namespace NetFabric.Tests
         [Theory]
         [MemberData(nameof(RemoveItemData))]
         [MemberData(nameof(RemoveLastItemData))]
-        void RemoveLastItem(IEnumerable<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
+        void RemoveLastItem(IReadOnlyList<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -78,15 +78,15 @@ namespace NetFabric.Tests
             list.EnumerateReversed().Should().Equal(expectedCollection.Reverse());
         }
 
-        public static TheoryData<IEnumerable<int>, IReadOnlyCollection<int>> RemoveFirstData =>
-            new TheoryData<IEnumerable<int>, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>> RemoveFirstData =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>>
             {
                 { new int[] { 1 },              new int[] { } },
                 { new int[] { 1, 2, 3, 4, 5 },  new int[] { 2, 3, 4, 5 } },
             };
 
-        public static TheoryData<IEnumerable<int>, IReadOnlyCollection<int>> RemoveLastData =>
-            new TheoryData<IEnumerable<int>, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>> RemoveLastData =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>>
             {
                 { new int[] { 1 },              new int[] { } },
                 { new int[] { 1, 2, 3, 4, 5 },  new int[] { 1, 2, 3, 4 } },
@@ -94,7 +94,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(RemoveFirstData))]
-        void RemoveFirst(IEnumerable<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveFirst(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -112,7 +112,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(RemoveLastData))]
-        void RemoveLast(IEnumerable<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveLast(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -130,7 +130,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(RemoveFirstData))]
-        void RemoveFirst_WithEmpty_ShouldThrow(IEnumerable<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveFirst_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>();
@@ -144,7 +144,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(RemoveFirstData))]
-        void RemoveLast_WithEmpty_ShouldThrow(IEnumerable<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveLast_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>();

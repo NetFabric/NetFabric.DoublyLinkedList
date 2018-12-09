@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class AppendTests
     {
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>, IEnumerable<int>> AppendData =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>, IEnumerable<int>>
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>> AppendData =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>>
             {
                 { new int[] { },                new int[] { },                  new int[] { } },
                 { new int[] { },                new int[] { 1 } ,               new int[] { 1 } },
@@ -23,7 +23,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(AppendData))]
-        void Append(IEnumerable<int> left, IEnumerable<int> right, IReadOnlyCollection<int> expected)
+        void Append(IReadOnlyList<int> left, IReadOnlyList<int> right, IReadOnlyCollection<int> expected)
         {
             // Arrange
             var leftList = new DoubleLinkedList<int>(left);

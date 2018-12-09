@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class FindLastTests
     {
-        public static TheoryData<IEnumerable<int?>, int?, bool> Data =>
-            new TheoryData<IEnumerable<int?>, int?, bool>
+        public static TheoryData<IReadOnlyList<int?>, int?, bool> Data =>
+            new TheoryData<IReadOnlyList<int?>, int?, bool>
             {
                 { new int?[] { },                   null,   false },
                 { new int?[] { },                   1,      false },
@@ -27,7 +27,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void FindLast(IEnumerable<int?> collection, int? value, bool shouldFind)
+        public void FindLast(IReadOnlyList<int?> collection, int? value, bool shouldFind)
         {
             // Arrange
             var list = new DoubleLinkedList<int?>(collection);
@@ -47,8 +47,8 @@ namespace NetFabric.Tests
             }
         }
 
-        public static TheoryData<IEnumerable<int?>, int?> TailData =>
-            new TheoryData<IEnumerable<int?>, int?>
+        public static TheoryData<IReadOnlyList<int?>, int?> TailData =>
+            new TheoryData<IReadOnlyList<int?>, int?>
             {
                 { new int?[] { null, null, null },  null },
                 { new int?[] { 1, 1, 1 },           1 },
@@ -56,7 +56,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(TailData))]
-        public void FindLastTail(IEnumerable<int?> collection, int? value)
+        public void FindLastTail(IReadOnlyList<int?> collection, int? value)
         {
             // Arrange
             var list = new DoubleLinkedList<int?>(collection);

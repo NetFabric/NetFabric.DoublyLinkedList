@@ -7,8 +7,8 @@ namespace NetFabric.Tests
 {
     public class ReverseEnumerationTests
     {
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>> Data =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>> 
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> Data =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> 
             {
                 { new int[] { },                new int[] { } },
                 { new int[] { 1 },              new int[] { 1 } },
@@ -17,7 +17,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Enumeration(IEnumerable<int> collection, IEnumerable<int> expected)
+        public void Enumeration(IReadOnlyList<int> collection, IReadOnlyList<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -31,7 +31,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Reset(IEnumerable<int> collection, IEnumerable<int> expected)
+        public void Reset(IReadOnlyList<int> collection, IReadOnlyList<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);

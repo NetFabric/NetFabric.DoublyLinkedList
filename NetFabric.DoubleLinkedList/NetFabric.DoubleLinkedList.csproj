@@ -12,7 +12,6 @@
     <PackageLicenseUrl>https://github.com/NetFabric/NetFabric.DoubleLinkedList/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://user-images.githubusercontent.com/534533/49182105-390f3a80-f351-11e8-8e84-c785cddd2995.png</PackageIconUrl>
     <PackageTags>collection</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
     <LangVersion>latest</LangVersion>
     <Features>strict</Features>
     <RootNamespace>NetFabric</RootNamespace>

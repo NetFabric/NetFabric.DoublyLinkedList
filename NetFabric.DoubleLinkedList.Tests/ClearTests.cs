@@ -7,8 +7,8 @@ namespace NetFabric.Tests
 {
     public class ClearTests
     {
-        public static TheoryData<IEnumerable<int>> Data =>
-            new TheoryData<IEnumerable<int>>
+        public static TheoryData<IReadOnlyList<int>> Data =>
+            new TheoryData<IReadOnlyList<int>>
             {
                 new int[] { },
                 new int[] { 1 },
@@ -17,7 +17,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Clear(IEnumerable<int> collection)
+        public void Clear(IReadOnlyList<int> collection)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);

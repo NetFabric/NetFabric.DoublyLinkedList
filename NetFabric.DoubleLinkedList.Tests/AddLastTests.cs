@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class AddLastTests
     {
-        public static TheoryData<IEnumerable<int>, int, IReadOnlyCollection<int>> ItemData =>
-            new TheoryData<IEnumerable<int>, int, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>> ItemData =>
+            new TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>>
             {
                 { new int[] { },            1, new int[] { 1 } }, 
                 { new int[] { 1 },          2, new int[] { 1, 2 } },
@@ -18,7 +18,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(ItemData))]
-        void AddItem(IEnumerable<int> collection, int item, IReadOnlyCollection<int> expected)
+        void AddItem(IReadOnlyList<int> collection, int item, IReadOnlyList<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -34,8 +34,8 @@ namespace NetFabric.Tests
             list.EnumerateReversed().Should().Equal(expected.Reverse());
         }
 
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>, bool, IReadOnlyCollection<int>> CollectionData =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>, bool, IReadOnlyCollection<int>>
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>> CollectionData =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>>
             {
                 { new int[] { },                new int[] { },                  false,  new int[] { } },
                 { new int[] { },                new int[] { 1 },                true,   new int[] { 1 } },
@@ -50,7 +50,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(CollectionData))]
-        void AddCollection(IEnumerable<int> collection, IEnumerable<int> items, bool isMutated, IReadOnlyCollection<int> expected)
+        void AddEnumerable(IReadOnlyList<int> collection, IEnumerable<int> items, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
@@ -69,8 +69,29 @@ namespace NetFabric.Tests
             list.EnumerateReversed().Should().Equal(expected.Reverse());
         }
 
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>, bool, bool, IReadOnlyCollection<int>> ListData =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>, bool, bool, IReadOnlyCollection<int>>
+        [Theory]
+        [MemberData(nameof(CollectionData))]
+        void AddCollection(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool isMutated, IReadOnlyList<int> expected)
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>(collection);
+            var version = list.Version;
+
+            // Act
+            list.AddLast(items);
+
+            // Assert
+            list.Count.Should().Be(expected.Count);
+            if (isMutated)
+                list.Version.Should().NotBe(version);
+            else
+                list.Version.Should().Be(version);
+            list.EnumerateForward().Should().Equal(expected);
+            list.EnumerateReversed().Should().Equal(expected.Reverse());
+        }
+
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, bool, IReadOnlyList<int>> ListData =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, bool, IReadOnlyList<int>>
             {
                 { new int[] { },                new int[] { },                  false,  false,  new int[] { } },
                 { new int[] { },                new int[] { 1 },                false,  true,   new int[] { 1 } },
@@ -94,7 +115,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(ListData))]
-        void AddList(IEnumerable<int> collection, IEnumerable<int> items, bool reverse, bool isMutated, IReadOnlyCollection<int> expected)
+        void AddList(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool reverse, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
             var left = new DoubleLinkedList<int>(collection);
@@ -116,7 +137,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(ListData))]
-        void AddListFrom(IEnumerable<int> collection, IEnumerable<int> items, bool reverse, bool isMutated, IReadOnlyCollection<int> expected)
+        void AddListFrom(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool reverse, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
             var left = new DoubleLinkedList<int>(collection);

@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class FindTests
     {
-        public static TheoryData<IEnumerable<int?>, int?, bool> Data =>
-            new TheoryData<IEnumerable<int?>, int?, bool>
+        public static TheoryData<IReadOnlyList<int?>, int?, bool> Data =>
+            new TheoryData<IReadOnlyList<int?>, int?, bool>
             {
                 { new int?[] { },                   null,   false },
                 { new int?[] { },                   1,      false },
@@ -27,7 +27,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Find(IEnumerable<int?> collection, int? value, bool shouldFind)
+        public void Find(IReadOnlyList<int?> collection, int? value, bool shouldFind)
         {
             // Arrange
             var list = new DoubleLinkedList<int?>(collection);
@@ -47,8 +47,8 @@ namespace NetFabric.Tests
             }
         }
 
-        public static TheoryData<IEnumerable<int?>, int?> HeadData =>
-            new TheoryData<IEnumerable<int?>, int?>
+        public static TheoryData<IReadOnlyList<int?>, int?> HeadData =>
+            new TheoryData<IReadOnlyList<int?>, int?>
             {
                 { new int?[] { null, null, null },  null },
                 { new int?[] { 1, 1, 1 },           1 },
@@ -56,7 +56,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(HeadData))]
-        public void FindHead(IEnumerable<int?> collection, int? value)
+        public void FindHead(IReadOnlyList<int?> collection, int? value)
         {
             // Arrange
             var list = new DoubleLinkedList<int?>(collection);

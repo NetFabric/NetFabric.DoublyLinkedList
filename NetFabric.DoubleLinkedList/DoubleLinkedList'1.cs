@@ -27,6 +27,15 @@ namespace NetFabric
             AddLast(collection);
         }
 
+        public DoubleLinkedList(IReadOnlyList<T> collection, bool reversed) :
+            this()
+        {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
+            AddLast(collection, reversed);
+        }
+
         public Node First =>
             head;
 
@@ -153,17 +162,92 @@ namespace NetFabric
             version++;
         }
 
-        public void AddFirst(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddFirst(IReadOnlyList<T> collection, bool reversed = false)
         {
+            if (collection.Count == 0)
+                return;
+
             Node tempHead = null;
             Node tempTail = null;
-            if (reversed && list.count >= 2)
+            tempHead = tempTail = new Node
+            {
+                List = this,
+                Value = collection[0],
+                Next = null,
+                Previous = null,
+            };
+            if (reversed)
                 AssignReversed();
             else
                 Assign();
 
-            if (tempHead is null)
+            if (IsEmpty)
+            {
+                head = tempHead;
+                tail = tempTail;
+            }
+            else
+            {
+                head.Previous = tempTail;
+                tempTail.Next = head;
+                head = tempHead;
+            }
+            count += collection.Count;
+            version++;
+
+            void Assign()
+            {
+                for (int index = 1, end = collection.Count; index < end; index++)
+                {
+                    var node = new Node
+                    {
+                        List = this,
+                        Value = collection[index],
+                        Next = null,
+                        Previous = tempTail,
+                    };
+                    tempTail.Next = node;
+                    tempTail = node;
+                }
+            }
+
+            void AssignReversed()
+            {
+                for (var index = collection.Count - 2; index >= 0; index--)
+                {
+                    var node = new Node
+                    {
+                        List = this,
+                        Value = collection[index],
+                        Next = null,
+                        Previous = tempTail,
+                    };
+                    tempTail.Next = node;
+                    tempTail = node;
+                }
+            }
+        }
+
+        public void AddFirst(DoubleLinkedList<T> list, bool reversed = false)
+        {
+            if (list.Count == 0)
                 return;
+
+            Node tempHead;
+            Node tempTail;
+            var current = list.head;
+            tempHead = tempTail = new Node
+            {
+                List = this,
+                Value = current.Value,
+                Next = null,
+                Previous = null,
+            };
+
+            if (reversed)
+                AssignReversed();
+            else
+                Assign();
 
             if (IsEmpty)
             {
@@ -181,76 +265,54 @@ namespace NetFabric
 
             void Assign()
             {
-                var current = list.head;
-                if (!(current is null))
+                current = current.Next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
+                    var node = new Node
                     {
                         List = this,
                         Value = current.Value,
                         Next = null,
-                        Previous = null,
+                        Previous = tempTail,
                     };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = null,
-                            Previous = tempTail,
-                        };
-                        tempTail.Next = node;
-                        tempTail = node;
+                    tempTail.Next = node;
+                    tempTail = node;
 
-                        current = current.Next;
-                    }
+                    current = current.Next;
                 }
             }
 
             void AssignReversed()
             {
-                var current = list.head;
-                if (!(current is null))
+                current = current.Next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
+                    var node = new Node
                     {
                         List = this,
                         Value = current.Value,
-                        Next = null,
+                        Next = tempHead,
                         Previous = null,
                     };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = tempHead,
-                            Previous = null,
-                        };
-                        tempHead.Previous = node;
-                        tempHead = node;
+                    tempHead.Previous = node;
+                    tempHead = node;
 
-                        current = current.Next;
-                    }
+                    current = current.Next;
                 }
             }
         }
 
         public void AddFirstFrom(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list.Count == 0)
+                return;
+
             Node tempHead = null;
             Node tempTail = null;
-            if (reversed && list.count >= 2)
+            if (reversed)
                 AssignReversed();
             else
                 Assign();
-
-            if (tempHead is null)
-                return;
 
             if (IsEmpty)
             {
@@ -283,29 +345,25 @@ namespace NetFabric
             void AssignReversed()
             {
                 var current = list.head;
-                if (!(current is null))
+                var next = current.Next;
+
+                current.List = this;
+                current.Next = null;
+                current.Previous = null;
+                tempHead = tempTail = current;
+
+                current = next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
-                    {
-                        List = this,
-                        Value = current.Value,
-                        Next = null,
-                        Previous = null,
-                    };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = tempHead,
-                            Previous = null,
-                        };
-                        tempHead.Previous = node;
-                        tempHead = node;
-                        current = current.Next;
-                    }
+                    next = current.Next;
+
+                    current.List = this;
+                    current.Next = tempHead;
+                    current.Previous = null;
+                    tempHead.Previous = current;
+                    tempHead = current;
+
+                    current = next;
                 }
             }
         }
@@ -378,17 +436,92 @@ namespace NetFabric
             version++;
         }
 
-        public void AddLast(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddLast(IReadOnlyList<T> collection, bool reversed = false)
         {
+            if (collection.Count == 0)
+                return;
+
             Node tempHead = null;
             Node tempTail = null;
-            if (reversed && list.count >= 2)
+            tempHead = tempTail = new Node
+            {
+                List = this,
+                Value = collection[0],
+                Next = null,
+                Previous = null,
+            };
+            if (reversed)
                 AssignReversed();
             else
                 Assign();
 
-            if (tempHead is null)
+            if (IsEmpty)
+            {
+                head = tempHead;
+                tail = tempTail;
+            }
+            else
+            {
+                tail.Next = tempHead;
+                tempHead.Previous = tail;
+                tail = tempTail;
+            }
+            count += collection.Count;
+            version++;
+
+            void Assign()
+            {
+                for (int index = 1, end = collection.Count; index < end; index++)
+                {
+                    var node = new Node
+                    {
+                        List = this,
+                        Value = collection[index],
+                        Next = null,
+                        Previous = tempTail,
+                    };
+                    tempTail.Next = node;
+                    tempTail = node;
+                }
+            }
+
+            void AssignReversed()
+            {
+                for (var index = collection.Count - 2; index >= 0; index--)
+                {
+                    var node = new Node
+                    {
+                        List = this,
+                        Value = collection[index],
+                        Next = null,
+                        Previous = tempTail,
+                    };
+                    tempTail.Next = node;
+                    tempTail = node;
+                }
+            }
+        }
+
+        public void AddLast(DoubleLinkedList<T> list, bool reversed = false)
+        {
+            if (list.Count == 0)
                 return;
+
+            Node tempHead = null;
+            Node tempTail = null;
+            var current = list.head;
+            tempHead = tempTail = new Node
+            {
+                List = this,
+                Value = current.Value,
+                Next = null,
+                Previous = null,
+            };
+
+            if (reversed)
+                AssignReversed();
+            else
+                Assign();
 
             if (IsEmpty)
             {
@@ -406,76 +539,54 @@ namespace NetFabric
 
             void Assign()
             {
-                var current = list.head;
-                if (!(current is null))
+                current = current.Next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
+                    var node = new Node
                     {
                         List = this,
                         Value = current.Value,
                         Next = null,
-                        Previous = null,
+                        Previous = tempTail,
                     };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = null,
-                            Previous = tempTail,
-                        };
-                        tempTail.Next = node;
-                        tempTail = node;
+                    tempTail.Next = node;
+                    tempTail = node;
 
-                        current = current.Next;
-                    }
+                    current = current.Next;
                 }
             }
 
             void AssignReversed()
             {
-                var current = list.head;
-                if (!(current is null))
+                current = current.Next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
+                    var node = new Node
                     {
                         List = this,
                         Value = current.Value,
-                        Next = null,
+                        Next = tempHead,
                         Previous = null,
                     };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = tempHead,
-                            Previous = null,
-                        };
-                        tempHead.Previous = node;
-                        tempHead = node;
+                    tempHead.Previous = node;
+                    tempHead = node;
 
-                        current = current.Next;
-                    }
+                    current = current.Next;
                 }
             }
         }
 
         public void AddLastFrom(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list.Count == 0)
+                return;
+
             Node tempHead = null;
             Node tempTail = null;
-            if (reversed && list.count >= 2)
+            if (reversed)
                 AssignReversed();
             else
                 Assign();
-
-            if (tempHead is null)
-                return;
 
             if (IsEmpty)
             {
@@ -508,29 +619,25 @@ namespace NetFabric
             void AssignReversed()
             {
                 var current = list.head;
-                if (!(current is null))
+                var next = current.Next;
+
+                current.List = this;
+                current.Next = null;
+                current.Previous = null;
+                tempHead = tempTail = current;
+
+                current = next;
+                while (!(current is null))
                 {
-                    tempHead = tempTail = new Node
-                    {
-                        List = this,
-                        Value = current.Value,
-                        Next = null,
-                        Previous = null,
-                    };
-                    current = current.Next;
-                    while (!(current is null))
-                    {
-                        var node = new Node
-                        {
-                            List = this,
-                            Value = current.Value,
-                            Next = tempHead,
-                            Previous = null,
-                        };
-                        tempHead.Previous = node;
-                        tempHead = node;
-                        current = current.Next;
-                    }
+                    next = current.Next;
+
+                    current.List = this;
+                    current.Next = tempHead;
+                    current.Previous = null;
+                    tempHead.Previous = current;
+                    tempHead = current;
+
+                    current = next;
                 }
             }
         }

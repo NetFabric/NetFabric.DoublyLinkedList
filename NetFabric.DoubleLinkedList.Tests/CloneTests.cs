@@ -8,8 +8,8 @@ namespace NetFabric.Tests
 {
     public class CloneTests
     {
-        public static TheoryData<IEnumerable<int>, IEnumerable<int>> Data =>
-            new TheoryData<IEnumerable<int>, IEnumerable<int>>
+        public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> Data =>
+            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>>
             {
                 { new int[] { },                new int[] { } },
                 { new int[] { 1 },              new int[] { 1 } },
@@ -18,7 +18,7 @@ namespace NetFabric.Tests
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Clone(IEnumerable<int> collection, IEnumerable<int> expected)
+        public void Clone(IReadOnlyList<int> collection, IReadOnlyList<int> expected)
         {
             // Arrange
             var list = new DoubleLinkedList<int>(collection);
