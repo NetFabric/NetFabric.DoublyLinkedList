@@ -558,7 +558,7 @@ namespace NetFabric
         public Node Find(T value)
         {
             var node = head;
-            if (Object.ReferenceEquals(value, null))
+            if (value == null)
             {
                 while (!(node is null))
                 {
@@ -585,7 +585,7 @@ namespace NetFabric
         public Node FindLast(T value)
         {
             var node = tail;
-            if (Object.ReferenceEquals(value, null))
+            if (value == null)
             {
                 while (!(node is null))
                 {
