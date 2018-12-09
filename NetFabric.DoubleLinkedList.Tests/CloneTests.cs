@@ -29,7 +29,9 @@ namespace NetFabric.Tests
             // Assert
             result.Version.Should().Be(0);
             result.Count.Should().Be(list.Count);
+            result.EnumerateForward().Should().NotBeSameAs(list.EnumerateForward());
             result.EnumerateForward().Should().Equal(expected);
+            result.EnumerateForward().Should().NotBeSameAs(list.EnumerateForward());
             result.EnumerateReversed().Should().Equal(collection.Reverse());
         }
     }
