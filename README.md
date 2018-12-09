@@ -1,6 +1,10 @@
 # NetFabric.DoubleLinkedList
 
-![GitHub last commit (master)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.DoubleLinkedList/master.svg?logo=github&logoColor=lightgray&style=popout-square)[![Nuget](https://img.shields.io/nuget/dt/NetFabric.DoubleLinkedList.svg?logo=nuget&logoColor=lightgray&style=popout-square)](https://www.nuget.org/packages/NetFabric.DoubleLinkedList/)
+![GitHub last commit (master)](https://img.shields.io/github/last-commit/NetFabric/NetFabric.DoubleLinkedList/master.svg?logo=github&logoColor=lightgray&style=popout-square)
+[![Nuget](https://img.shields.io/nuget/dt/NetFabric.DoubleLinkedList.svg?style=popout-square&logoColor=lightgray&logo=nuget)](https://www.nuget.org/packages/NetFabric.DoubleLinkedList/)
+[![Build](https://img.shields.io/azure-devops/build/aalmada/NetFabric.DoubleLinkedList/2/master.svg?style=popout-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PGcgZmlsbD0iIzlmOWY5ZiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDloMXYyaDJ2MUgwek0uNjY3IDRoMy4wNjhMNi4yMDMuNDQ0QzYuMzkuMTY3IDYuNzAxIDAgNy4wMzUgMEgxMS41YS41LjUgMCAwIDEgLjUuNXY0LjQ2NWExIDEgMCAwIDEtLjQ0NS44MzJMOCA4LjI2NXYzLjA2OGEuNjY3LjY2NyAwIDAgMS0uNjY3LjY2N0g1bC0xLTEgMS4yNS0xLjI1LTEtMUwzIDEwIDIgOWwxLjI1LTEuMjUtMS0xTDEgOCAwIDdWNC42NjdDMCA0LjI5OS4yOTggNCAuNjY3IDR6TTEwLjUgM2ExLjUgMS41IDAgMSAxLTMgMCAxLjUgMS41IDAgMCAxIDMgMHoiLz48L2c+PC9zdmc+)](https://dev.azure.com/aalmada/NetFabric.DoubleLinkedList)
+[![Unit Tests](https://img.shields.io/azure-devops/tests/aalmada/NetFabric.DoubleLinkedList/2/master.svg?style=popout-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PGcgZmlsbD0iIzlmOWY5ZiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDloMXYyaDJ2MUgwek0uNjY3IDRoMy4wNjhMNi4yMDMuNDQ0QzYuMzkuMTY3IDYuNzAxIDAgNy4wMzUgMEgxMS41YS41LjUgMCAwIDEgLjUuNXY0LjQ2NWExIDEgMCAwIDEtLjQ0NS44MzJMOCA4LjI2NXYzLjA2OGEuNjY3LjY2NyAwIDAgMS0uNjY3LjY2N0g1bC0xLTEgMS4yNS0xLjI1LTEtMUwzIDEwIDIgOWwxLjI1LTEuMjUtMS0xTDEgOCAwIDdWNC42NjdDMCA0LjI5OS4yOTggNCAuNjY3IDR6TTEwLjUgM2ExLjUgMS41IDAgMSAxLTMgMCAxLjUgMS41IDAgMCAxIDMgMHoiLz48L2c+PC9zdmc+)](https://dev.azure.com/aalmada/NetFabric.DoubleLinkedList)
+[![Coverage](https://img.shields.io/azure-devops/coverage/aalmada/NetFabric.DoubleLinkedList/2/master.svg?style=popout-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+PGcgZmlsbD0iIzlmOWY5ZiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDloMXYyaDJ2MUgwek0uNjY3IDRoMy4wNjhMNi4yMDMuNDQ0QzYuMzkuMTY3IDYuNzAxIDAgNy4wMzUgMEgxMS41YS41LjUgMCAwIDEgLjUuNXY0LjQ2NWExIDEgMCAwIDEtLjQ0NS44MzJMOCA4LjI2NXYzLjA2OGEuNjY3LjY2NyAwIDAgMS0uNjY3LjY2N0g1bC0xLTEgMS4yNS0xLjI1LTEtMUwzIDEwIDIgOWwxLjI1LTEuMjUtMS0xTDEgOCAwIDdWNC42NjdDMCA0LjI5OS4yOTggNCAuNjY3IDR6TTEwLjUgM2ExLjUgMS41IDAgMSAxLTMgMCAxLjUgMS41IDAgMCAxIDMgMHoiLz48L2c+PC9zdmc+)](https://dev.azure.com/aalmada/NetFabric.DoubleLinkedList)
 
 An alternative to the [`System.Collections.Generic.LinkedList<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1) with reverse operation and enumeration without allocation.
 
@@ -10,11 +14,15 @@ New overrides and methods were added to minimizing the memory allocations, numbe
 
 ## Benchmarks
 
+Performance comparison between [`System.Collections.Generic.LinkedList<T>`](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.linkedlist-1) and `DoubleLinkedList<T>`. Shorter is better.
+
 ![constructor performance](https://user-images.githubusercontent.com/534533/49696258-7a98b480-fb9f-11e8-9a06-3585e4dc684b.png)
 
 ![forward enumeration performance](https://user-images.githubusercontent.com/534533/49405413-40b45200-f74a-11e8-9b63-4ac67efd144d.png)
 
 ![reverse enumeration performance](https://user-images.githubusercontent.com/534533/49405544-a43e7f80-f74a-11e8-9aba-544cb3141e33.png)
+
+The benchmarks project is part of the repository. You can check the code and run it on your machine.
 
 ## Forward and reverse enumeration
 
@@ -43,9 +51,9 @@ outputs
 
 ## `AddFirst()` and `AddLast()`
 
-These methods now support the addition of a `IEnumerable<T>` or another `DoubleLinkedList<T>`. 
+These methods now support the addition of collections of items. These can come from an `IEnumerable<T>`, `IReadOnlyList<T>` or another `DoubleLinkedList<T>`. 
 
-When the parameter is a `DoubleLinkedList<T>`, it can be added reversed.
+When the parameter is `IReadOnlyList<T>` or `DoubleLinkedList<T>`, they can be added reversed.
 
 ```csharp
 var list = new DoubleLinkedList<int>(new[] {1, 2, 3, 4});

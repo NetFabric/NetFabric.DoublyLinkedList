@@ -27,7 +27,7 @@ namespace NetFabric
             AddLast(collection);
         }
 
-        public DoubleLinkedList(IReadOnlyList<T> collection, bool reversed) :
+        public DoubleLinkedList(IReadOnlyList<T> collection, bool reversed = false) :
             this()
         {
             if (collection is null)
@@ -669,7 +669,7 @@ namespace NetFabric
             {
                 while (!(node is null))
                 {
-                    if (Object.ReferenceEquals(node.Value, null))
+                    if (node.Value == null)
                         return node;
 
                     node = node.Next;
@@ -696,7 +696,7 @@ namespace NetFabric
             {
                 while (!(node is null))
                 {
-                    if (Object.ReferenceEquals(node.Value, null))
+                    if (node.Value == null)
                         return node;
 
                     node = node.Previous;
