@@ -1,15 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
 {
-    [ExcludeFromCodeCoverage]
     public class AddLastTests
     {
+        [Fact]
+        void AddNullEnumerable()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddLast((IEnumerable<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("collection");
+        }
+
+        [Fact]
+        void AddNullCollection()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddLast((IReadOnlyList<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("collection");
+        }
+
+        [Fact]
+        void AddNullList()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddLast((DoubleLinkedList<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("list");
+        }
+
         public static TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>> ItemData =>
             new TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>>
             {

@@ -1,15 +1,45 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
 {
-    [ExcludeFromCodeCoverage]
     public class AppendTests
     {
+        [Fact]
+        void AppendNullLeft()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => DoubleLinkedList.Append(null, new DoubleLinkedList<int>());
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("left");
+        }
+
+        [Fact]
+        void AppendNullRight()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => DoubleLinkedList.Append(new DoubleLinkedList<int>(), null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("right");
+        }
+
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>> AppendData =>
             new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>>
             {

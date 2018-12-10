@@ -21,18 +21,12 @@ namespace NetFabric
         public DoubleLinkedList(IEnumerable<T> collection) :
             this()
         {
-            if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
-
             AddLast(collection);
         }
 
         public DoubleLinkedList(IReadOnlyList<T> collection, bool reversed = false) :
             this()
         {
-            if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
-
             AddLast(collection, reversed);
         }
 
@@ -72,6 +66,9 @@ namespace NetFabric
             };
             if (tail == node)
                 tail = result;
+            else
+                node.Next.Previous = result;
+            node.Next = result;
             count++;
             version++;
             return result;
@@ -89,6 +86,9 @@ namespace NetFabric
             };
             if (head == node)
                 head = result;
+            else
+                node.Previous.Next = result;
+            node.Previous = result;
             count++;
             version++;
             return result;
@@ -115,6 +115,9 @@ namespace NetFabric
 
         public void AddFirst(IEnumerable<T> collection)
         {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
             Node tempHead = null;
             Node tempTail = null;
             using (var enumerator = collection.GetEnumerator())
@@ -164,6 +167,9 @@ namespace NetFabric
 
         public void AddFirst(IReadOnlyList<T> collection, bool reversed = false)
         {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
             if (collection.Count == 0)
                 return;
 
@@ -230,6 +236,9 @@ namespace NetFabric
 
         public void AddFirst(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list is null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.Count == 0)
                 return;
 
@@ -304,6 +313,9 @@ namespace NetFabric
 
         public void AddFirstFrom(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list is null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.Count == 0)
                 return;
 
@@ -389,6 +401,9 @@ namespace NetFabric
 
         public void AddLast(IEnumerable<T> collection)
         {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
             Node tempHead = null;
             Node tempTail = null;
             using (var enumerator = collection.GetEnumerator())
@@ -438,6 +453,9 @@ namespace NetFabric
 
         public void AddLast(IReadOnlyList<T> collection, bool reversed = false)
         {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
             if (collection.Count == 0)
                 return;
 
@@ -504,6 +522,9 @@ namespace NetFabric
 
         public void AddLast(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list is null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.Count == 0)
                 return;
 
@@ -578,6 +599,9 @@ namespace NetFabric
 
         public void AddLastFrom(DoubleLinkedList<T> list, bool reversed = false)
         {
+            if (list is null)
+                throw new ArgumentNullException(nameof(list));
+
             if (list.Count == 0)
                 return;
 

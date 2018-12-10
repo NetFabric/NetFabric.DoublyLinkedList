@@ -1,15 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
 {
-    [ExcludeFromCodeCoverage]
     public class AddFirstTests
     {
+        [Fact]
+        void AddNullEnumerable()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddFirst((IEnumerable<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("collection");
+        }
+
+        [Fact]
+        void AddNullCollection()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddFirst((IReadOnlyList<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("collection");
+        }
+
+        [Fact]
+        void AddNullList()
+        {
+            // Arrange
+            var list = new DoubleLinkedList<int>();
+
+            // Act
+            Action action = () => list.AddFirst((DoubleLinkedList<int>)null);
+
+            // Assert
+            action.Should()
+                .ThrowExactly<ArgumentNullException>()
+                .And
+                .ParamName.Should()
+                .Be("list");
+        }
+
         public static TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>> ItemData =>
             new TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>>
             {
@@ -35,7 +84,7 @@ namespace NetFabric.Tests
             list.EnumerateForward().Should().Equal(expected);
             list.EnumerateReversed().Should().Equal(expected.Reverse());
         }
-
+        
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>> CollectionData =>
             new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>>
             {
