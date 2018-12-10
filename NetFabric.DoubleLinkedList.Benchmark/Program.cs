@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Running;
 
 namespace NetFabric.Benchmark
 {
+    [ExcludeFromCodeCoverage]
     class Program
     {
         static void Main(string[] args)

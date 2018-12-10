@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
 {
+    [ExcludeFromCodeCoverage]
     public class ClearTests
     {
         public static TheoryData<IReadOnlyList<int>> Data =>
