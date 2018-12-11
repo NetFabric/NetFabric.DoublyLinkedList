@@ -15,10 +15,9 @@
     <LangVersion>latest</LangVersion>
     <Features>strict</Features>
     <RootNamespace>NetFabric</RootNamespace>
-    <PackageReleaseNotes>
-      - Added AddFirstFrom and AddLastFrom.
-      - Performance improvements.
-    </PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <!-- SourceLink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -26,6 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.9.0.7583">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
