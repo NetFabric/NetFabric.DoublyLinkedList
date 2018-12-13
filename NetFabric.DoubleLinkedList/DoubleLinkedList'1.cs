@@ -881,7 +881,7 @@ namespace NetFabric
             {
                 list.head = list.tail = new Node
                 {
-                    List = this,
+                    List = list,
                     Value = current.Value,
                     Next = null,
                     Previous = null,
@@ -891,7 +891,7 @@ namespace NetFabric
                 {
                     var node = new Node
                     {
-                        List = this,
+                        List = list,
                         Value = current.Value,
                         Next = null,
                         Previous = list.tail,
@@ -920,7 +920,7 @@ namespace NetFabric
             {
                 list.head = list.tail = new Node
                 {
-                    List = this,
+                    List = list,
                     Value = current.Value,
                     Next = null,
                     Previous = null,
@@ -930,7 +930,7 @@ namespace NetFabric
                 {
                     var node = new Node
                     {
-                        List = this,
+                        List = list,
                         Value = current.Value,
                         Next = list.head,
                         Previous = null,

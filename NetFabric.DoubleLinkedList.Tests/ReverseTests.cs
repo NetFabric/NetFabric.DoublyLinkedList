@@ -29,6 +29,10 @@ namespace NetFabric.Tests
             // Assert
             result.Version.Should().Be(0);
             result.Count.Should().Be(list.Count);
+            // result.EnumerateForward().Should().AllBeEquivalentTo(
+            //     new { List = result }, 
+            //     options => options
+            //         .Including(o => o.List));
             result.EnumerateForward().Should().NotBeSameAs(list.EnumerateForward());
             result.EnumerateForward().Should().Equal(expected);
             result.EnumerateReversed().Should().Equal(collection);
