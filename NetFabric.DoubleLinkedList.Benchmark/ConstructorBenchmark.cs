@@ -8,7 +8,8 @@ namespace NetFabric.Benchmark
     [MemoryDiagnoser]
     public class ConstructorBenchmark
     {
-        List<int> collection;
+        IEnumerable<int> enumerable;
+        IReadOnlyList<int> collection;
 
         [Params(0, 10, 100)]
         public int Count {get; set;}
@@ -16,16 +17,21 @@ namespace NetFabric.Benchmark
         [GlobalSetup]
         public void GlobalSetup()
         {
-            collection = Enumerable.Range(0, Count).ToList();
+            enumerable = Enumerable.Range(0, Count);
+            collection = enumerable.ToList();
         }
 
         [Benchmark(Baseline = true)]
         public LinkedList<int> LinkedList_Enumerable() =>
+            new LinkedList<int>(enumerable);
+
+        [Benchmark]
+        public LinkedList<int> LinkedList_List() =>
             new LinkedList<int>(collection);
 
         [Benchmark]
         public DoubleLinkedList<int> DoubleLinkedList_Enumerable() =>
-            new DoubleLinkedList<int>((IEnumerable<int>)collection);
+            new DoubleLinkedList<int>(enumerable);
 
         [Benchmark]
         public DoubleLinkedList<int> DoubleLinkedList_List() =>
