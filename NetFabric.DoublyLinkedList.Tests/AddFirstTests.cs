@@ -12,7 +12,7 @@ namespace NetFabric.Tests
         void AddNullEnumerable()
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
             Action action = () => list.AddFirst((IEnumerable<int>)null);
@@ -29,7 +29,7 @@ namespace NetFabric.Tests
         void AddNullCollection()
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
             Action action = () => list.AddFirst((IReadOnlyList<int>)null);
@@ -46,10 +46,10 @@ namespace NetFabric.Tests
         void AddNullList()
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
-            Action action = () => list.AddFirst((DoubleLinkedList<int>)null);
+            Action action = () => list.AddFirst((DoublyLinkedList<int>)null);
 
             // Assert
             action.Should()
@@ -72,7 +72,7 @@ namespace NetFabric.Tests
         void AddItem(IReadOnlyList<int> collection, int item, IReadOnlyList<int> expected)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -104,7 +104,7 @@ namespace NetFabric.Tests
         void AddEnumerable(IReadOnlyList<int> collection, IEnumerable<int> items, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -125,7 +125,7 @@ namespace NetFabric.Tests
         void AddCollection(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -169,9 +169,9 @@ namespace NetFabric.Tests
         void AddList(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool reversed, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
-            var left = new DoubleLinkedList<int>(collection);
+            var left = new DoublyLinkedList<int>(collection);
             var version = left.Version;
-            var right = new DoubleLinkedList<int>(items);
+            var right = new DoublyLinkedList<int>(items);
 
             // Act
             left.AddFirst(right, reversed);
@@ -191,9 +191,9 @@ namespace NetFabric.Tests
         void AddListFrom(IReadOnlyList<int> collection, IReadOnlyList<int> items, bool reversed, bool isMutated, IReadOnlyList<int> expected)
         {
             // Arrange
-            var left = new DoubleLinkedList<int>(collection);
+            var left = new DoublyLinkedList<int>(collection);
             var version = left.Version;
-            var right = new DoubleLinkedList<int>(items);
+            var right = new DoublyLinkedList<int>(items);
 
             // Act
             left.AddFirstFrom(right, reversed);

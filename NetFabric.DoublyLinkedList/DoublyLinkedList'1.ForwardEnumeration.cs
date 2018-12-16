@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace NetFabric
 {
-    public sealed partial class DoubleLinkedList<T>
+    public sealed partial class DoublyLinkedList<T>
     {
-        public readonly struct ReverseEnumeration : IReadOnlyCollection<T>
+        public readonly struct ForwardEnumeration : IReadOnlyCollection<T>
         {
-            readonly DoubleLinkedList<T> list;
+            readonly DoublyLinkedList<T> list;
 
-            internal ReverseEnumeration(DoubleLinkedList<T> list)
+            internal ForwardEnumeration(DoublyLinkedList<T> list)
             {
                 this.list = list;
             }
@@ -36,16 +36,16 @@ namespace NetFabric
                     Empty,
                 }
 
-                readonly DoubleLinkedList<T> list;
+                readonly DoublyLinkedList<T> list;
                 readonly int version;
                 Node current;
                 State state;
 
-                internal Enumerator(DoubleLinkedList<T> list)
+                internal Enumerator(DoublyLinkedList<T> list)
                 {
                     this.list = list;
                     version = list.version;
-                    current = list.tail;
+                    current = list.head;
                     if (list.IsEmpty)
                         state = State.Empty;
                     else
@@ -66,7 +66,7 @@ namespace NetFabric
                     switch (state)
                     {
                         case State.Normal:
-                            current = current.Previous;
+                            current = current.Next;
                             return !(current is null);
                         case State.First:
                             state = State.Normal;
@@ -81,7 +81,7 @@ namespace NetFabric
                     if (version != list.version)
                         throw new InvalidOperationException();
 
-                    current = list.tail;
+                    current = list.head;
                     if (list.IsEmpty)
                         state = State.Empty;
                     else

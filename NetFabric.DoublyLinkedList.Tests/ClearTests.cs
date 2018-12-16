@@ -20,7 +20,7 @@ namespace NetFabric.Tests
         public void Clear(IReadOnlyList<int> collection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act

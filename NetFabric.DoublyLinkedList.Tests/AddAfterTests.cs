@@ -12,7 +12,7 @@ namespace NetFabric.Tests
         void NullNode()
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
             Action action = () => list.AddAfter(null, 1);
@@ -29,8 +29,8 @@ namespace NetFabric.Tests
         void InvalidNode()
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
-            var anotherList = new DoubleLinkedList<int>(new int[] { 1 });
+            var list = new DoublyLinkedList<int>();
+            var anotherList = new DoublyLinkedList<int>(new int[] { 1 });
             var node = anotherList.Find(1);
 
             // Act
@@ -52,7 +52,7 @@ namespace NetFabric.Tests
         void AddItem(IReadOnlyList<int> collection, int after, int item, IReadOnlyList<int> expected)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
             var node = list.Find(after);
 

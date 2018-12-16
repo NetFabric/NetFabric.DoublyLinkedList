@@ -38,7 +38,7 @@ namespace NetFabric.Tests
         void RemoveItem(IReadOnlyList<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -61,7 +61,7 @@ namespace NetFabric.Tests
         void RemoveLastItem(IReadOnlyList<int> collection, int item, bool expected, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -97,7 +97,7 @@ namespace NetFabric.Tests
         void RemoveFirst(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -115,7 +115,7 @@ namespace NetFabric.Tests
         void RemoveLast(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             var version = list.Version;
 
             // Act
@@ -133,7 +133,7 @@ namespace NetFabric.Tests
         void RemoveFirst_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
             Action action = () => list.RemoveFirst();
@@ -147,7 +147,7 @@ namespace NetFabric.Tests
         void RemoveLast_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>();
+            var list = new DoublyLinkedList<int>();
 
             // Act
             Action action = () => list.RemoveLast();

@@ -9,7 +9,7 @@
             <!-- Match assembly file paths: -->
             <ModulePaths>
               <Include>
-                <ModulePath>.*NetFabric.DoubleLinkedList.dll$</ModulePath>
+                <ModulePath>.*NetFabric.DoublyLinkedList.dll$</ModulePath>
               </Include>
             </ModulePaths>
 

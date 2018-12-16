@@ -1,12 +1,12 @@
 using System;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NetFabric.DoubleLinkedList.Tests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NetFabric.DoublyLinkedList.Tests")]
 
 namespace NetFabric
 {
-    public static class DoubleLinkedList
+    public static class DoublyLinkedList
     {
-        public static DoubleLinkedList<T> Append<T>(DoubleLinkedList<T> left, DoubleLinkedList<T> right) 
+        public static DoublyLinkedList<T> Append<T>(DoublyLinkedList<T> left, DoublyLinkedList<T> right) 
         {
             if (left is null)
                 throw new ArgumentNullException(nameof(left));
@@ -14,7 +14,7 @@ namespace NetFabric
             if (right is null)
                 throw new ArgumentNullException(nameof(right));
 
-            var result = new DoubleLinkedList<T>();
+            var result = new DoublyLinkedList<T>();
             result.AddLast(left);
             result.AddLast(right);
             return result;

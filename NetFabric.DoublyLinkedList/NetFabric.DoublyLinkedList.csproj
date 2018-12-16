@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <PackageId>NetFabric.DoubleLinkedList</PackageId>
-    <Title>NetFabric.DoubleLinkedList</Title>
-    <Description>An alternative to LinkedList&lt;T&gt; with reverse operation and enumeration without allocation.</Description>
+    <PackageId>NetFabric.DoublyLinkedList</PackageId>
+    <Title>NetFabric.DoublyLinkedList</Title>
+    <Description>An alternative to System.Collection.Generics.LinkedList with reverse operation and enumeration without allocation.</Description>
     <Version>1.4.2</Version>
-    <Authors>Antão Almada</Authors>
-    <Copyright>Copyright 2018 Antão Almada</Copyright>
-    <RepositoryUrl>https://github.com/NetFabric/NetFabric.DoubleLinkedList</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/NetFabric/NetFabric.DoubleLinkedList/blob/master/LICENSE</PackageLicenseUrl>
+    <Authors>Antao Almada</Authors>
+    <Copyright>Copyright 2018 Antao Almada</Copyright>
+    <RepositoryUrl>https://github.com/NetFabric/NetFabric.DoublyLinkedList</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/NetFabric/NetFabric.DoublyLinkedList/blob/master/LICENSE</PackageLicenseUrl>
     <PackageIconUrl>https://user-images.githubusercontent.com/534533/49182105-390f3a80-f351-11e8-8e84-c785cddd2995.png</PackageIconUrl>
     <PackageTags>collection</PackageTags>
     <LangVersion>latest</LangVersion>
@@ -25,8 +25,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.9.0.7583">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-*" PrivateAssets="All" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.9.1.7622">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

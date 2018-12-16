@@ -14,7 +14,7 @@ namespace NetFabric.Tests
             // Arrange
 
             // Act
-            Action action = () => DoubleLinkedList.Append(null, new DoubleLinkedList<int>());
+            Action action = () => DoublyLinkedList.Append(null, new DoublyLinkedList<int>());
 
             // Assert
             action.Should()
@@ -30,7 +30,7 @@ namespace NetFabric.Tests
             // Arrange
 
             // Act
-            Action action = () => DoubleLinkedList.Append(new DoubleLinkedList<int>(), null);
+            Action action = () => DoublyLinkedList.Append(new DoublyLinkedList<int>(), null);
 
             // Assert
             action.Should()
@@ -58,13 +58,13 @@ namespace NetFabric.Tests
         void Append(IReadOnlyList<int> left, IReadOnlyList<int> right, IReadOnlyCollection<int> expected)
         {
             // Arrange
-            var leftList = new DoubleLinkedList<int>(left);
+            var leftList = new DoublyLinkedList<int>(left);
             var leftVersion = leftList.Version;
-            var rightList = new DoubleLinkedList<int>(right);
+            var rightList = new DoublyLinkedList<int>(right);
             var rightVersion = rightList.Version;
 
             // Act
-            var result = DoubleLinkedList.Append(leftList, rightList);
+            var result = DoublyLinkedList.Append(leftList, rightList);
 
             // Assert
             leftList.Version.Should().Be(leftVersion);

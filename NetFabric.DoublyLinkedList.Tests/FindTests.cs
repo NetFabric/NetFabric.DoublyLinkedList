@@ -30,7 +30,7 @@ namespace NetFabric.Tests
         public void Find(IReadOnlyList<int?> collection, int? value, bool shouldFind)
         {
             // Arrange
-            var list = new DoubleLinkedList<int?>(collection);
+            var list = new DoublyLinkedList<int?>(collection);
 
             // Act
             var result = list.Find(value);
@@ -59,7 +59,7 @@ namespace NetFabric.Tests
         public void FindHead(IReadOnlyList<int?> collection, int? value)
         {
             // Arrange
-            var list = new DoubleLinkedList<int?>(collection);
+            var list = new DoublyLinkedList<int?>(collection);
 
             // Act
             var result = list.Find(value);

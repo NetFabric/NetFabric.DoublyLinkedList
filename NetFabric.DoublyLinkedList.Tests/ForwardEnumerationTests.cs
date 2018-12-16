@@ -20,7 +20,7 @@ namespace NetFabric.Tests
         public void Enumeration(IReadOnlyList<int> collection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
 
             // Act
             var enumeration = list.EnumerateForward();
@@ -34,7 +34,7 @@ namespace NetFabric.Tests
         public void Reset(IReadOnlyList<int> collection)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
             using (var enumerator = list.EnumerateForward().GetEnumerator())
             {
                 var moveNext = enumerator.MoveNext();

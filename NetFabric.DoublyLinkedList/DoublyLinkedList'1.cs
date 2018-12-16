@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace NetFabric
 {
-    public sealed partial class DoubleLinkedList<T>
+    public sealed partial class DoublyLinkedList<T>
     {
         internal Node head;
         internal Node tail;
         int count;
         int version;
 
-        public DoubleLinkedList()
+        public DoublyLinkedList()
         {
             head = null;
             tail = null;
@@ -18,13 +18,13 @@ namespace NetFabric
             version = 0;
         }
 
-        public DoubleLinkedList(IEnumerable<T> collection) :
+        public DoublyLinkedList(IEnumerable<T> collection) :
             this()
         {
             AddLast(collection);
         }
 
-        public DoubleLinkedList(IReadOnlyList<T> collection, bool reversed = false) :
+        public DoublyLinkedList(IReadOnlyList<T> collection, bool reversed = false) :
             this()
         {
             AddLast(collection, reversed);
@@ -234,7 +234,7 @@ namespace NetFabric
             }
         }
 
-        public void AddFirst(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddFirst(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
                 throw new ArgumentNullException(nameof(list));
@@ -311,7 +311,7 @@ namespace NetFabric
             }
         }
 
-        public void AddFirstFrom(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddFirstFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
                 throw new ArgumentNullException(nameof(list));
@@ -520,7 +520,7 @@ namespace NetFabric
             }
         }
 
-        public void AddLast(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddLast(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
                 throw new ArgumentNullException(nameof(list));
@@ -597,7 +597,7 @@ namespace NetFabric
             }
         }
 
-        public void AddLastFrom(DoubleLinkedList<T> list, bool reversed = false)
+        public void AddLastFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
                 throw new ArgumentNullException(nameof(list));
@@ -866,9 +866,9 @@ namespace NetFabric
             version++;
         }
 
-        public DoubleLinkedList<T> Clone()
+        public DoublyLinkedList<T> Clone()
         {
-            var list = new DoubleLinkedList<T>
+            var list = new DoublyLinkedList<T>
             {
                 head = null,
                 tail = null,
@@ -905,9 +905,9 @@ namespace NetFabric
             return list;
         }
 
-        public DoubleLinkedList<T> Reverse()
+        public DoublyLinkedList<T> Reverse()
         {
-            var list = new DoubleLinkedList<T>
+            var list = new DoublyLinkedList<T>
             {
                 head = null,
                 tail = null,

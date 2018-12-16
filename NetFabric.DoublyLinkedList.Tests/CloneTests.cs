@@ -21,7 +21,7 @@ namespace NetFabric.Tests
         public void Clone(IReadOnlyList<int> collection, IReadOnlyList<int> expected)
         {
             // Arrange
-            var list = new DoubleLinkedList<int>(collection);
+            var list = new DoublyLinkedList<int>(collection);
 
             // Act
             var result = list.Clone();

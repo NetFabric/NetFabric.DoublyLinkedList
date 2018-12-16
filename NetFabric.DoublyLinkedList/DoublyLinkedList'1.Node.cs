@@ -1,10 +1,10 @@
 ﻿namespace NetFabric
 {
-    public sealed partial class DoubleLinkedList<T>
+    public sealed partial class DoublyLinkedList<T>
     {
         public sealed class Node
         {
-            public DoubleLinkedList<T> List { get; internal set; }
+            public DoublyLinkedList<T> List { get; internal set; }
 
             public Node Next { get; internal set; }
 

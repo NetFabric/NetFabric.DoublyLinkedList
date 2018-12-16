@@ -30,15 +30,15 @@ namespace NetFabric.Benchmark
             new LinkedList<int>(collection);
 
         [Benchmark]
-        public DoubleLinkedList<int> DoubleLinkedList_Enumerable() =>
-            new DoubleLinkedList<int>(enumerable);
+        public DoublyLinkedList<int> DoublyLinkedList_Enumerable() =>
+            new DoublyLinkedList<int>(enumerable);
 
         [Benchmark]
-        public DoubleLinkedList<int> DoubleLinkedList_List() =>
-            new DoubleLinkedList<int>(collection, false);
+        public DoublyLinkedList<int> DoublyLinkedList_List() =>
+            new DoublyLinkedList<int>(collection, false);
 
         [Benchmark]
-        public DoubleLinkedList<int> DoubleLinkedList_List_Reversed() =>
-            new DoubleLinkedList<int>(collection, true);
+        public DoublyLinkedList<int> DoublyLinkedList_List_Reversed() =>
+            new DoublyLinkedList<int>(collection, true);
     }
 }

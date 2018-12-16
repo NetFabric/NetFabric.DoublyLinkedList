@@ -10,14 +10,14 @@ namespace NetFabric.Benchmark
     {
         const int count = 10_000;
         LinkedList<int> linkedList;
-        DoubleLinkedList<int> doubleLinkedList;
+        DoublyLinkedList<int> doublyLinkedList;
 
         [GlobalSetup]
         public void GlobalSetup()
         {
             var data = Enumerable.Range(0, count);
             linkedList = new LinkedList<int>(data);
-            doubleLinkedList = new DoubleLinkedList<int>(data);
+            doublyLinkedList = new DoublyLinkedList<int>(data);
         }
         
         [Benchmark(Baseline = true)]
@@ -65,10 +65,10 @@ namespace NetFabric.Benchmark
         }
         
         [Benchmark]
-        public int DoubleLinkedList_Forward_While() 
+        public int DoublyLinkedList_Forward_While() 
         {
             var count = 0;
-            var current = doubleLinkedList.First;
+            var current = doublyLinkedList.First;
             while (!(current is null))
             {
                 count += current.Value;
@@ -78,19 +78,19 @@ namespace NetFabric.Benchmark
         }
 
         [Benchmark]
-        public int DoubleLinkedList_Forward_ForEach() 
+        public int DoublyLinkedList_Forward_ForEach() 
         {
             var count = 0;
-            foreach (var value in doubleLinkedList.EnumerateForward())
+            foreach (var value in doublyLinkedList.EnumerateForward())
                 count += value;
             return count;
         }
         
         [Benchmark]
-        public int DoubleLinkedList_Reverse_While() 
+        public int DoublyLinkedList_Reverse_While() 
         {
             var count = 0;
-            var current = doubleLinkedList.Last;
+            var current = doublyLinkedList.Last;
             while (!(current is null))
             {
                 count += current.Value;
@@ -100,10 +100,10 @@ namespace NetFabric.Benchmark
         }
 
         [Benchmark]
-        public int DoubleLinkedList_Reverse_ForEach() 
+        public int DoublyLinkedList_Reverse_ForEach() 
         {
             var count = 0;
-            foreach (var value in doubleLinkedList.EnumerateReversed())
+            foreach (var value in doublyLinkedList.EnumerateReversed())
                 count += value;
             return count;
         }
