@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
     <PackageId>NetFabric.DoublyLinkedList</PackageId>
     <Title>NetFabric.DoublyLinkedList</Title>
     <Description>An alternative to System.Collection.Generics.LinkedList with reverse operation and enumeration without allocation.</Description>
-    <Version>1.4.2</Version>
+    <Version>1.4.3</Version>
     <Authors>Antao Almada</Authors>
     <Copyright>Copyright 2018 Antao Almada</Copyright>
     <RepositoryUrl>https://github.com/NetFabric/NetFabric.DoublyLinkedList</RepositoryUrl>
@@ -15,7 +15,7 @@
     <LangVersion>latest</LangVersion>
     <Features>strict</Features>
     <RootNamespace>NetFabric</RootNamespace>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Lowered netstandard support to 1.0</PackageReleaseNotes>
     <!-- SourceLink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
