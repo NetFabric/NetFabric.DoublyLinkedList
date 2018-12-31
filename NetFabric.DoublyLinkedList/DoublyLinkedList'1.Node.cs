@@ -2,7 +2,7 @@
 {
     public sealed partial class DoublyLinkedList<T>
     {
-        public sealed class Node
+        public class Node
         {
             public DoublyLinkedList<T> List { get; internal set; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NetFabric
 {
-    public sealed partial class DoublyLinkedList<T>
+    public partial class DoublyLinkedList<T>
     {
         public readonly struct ReverseEnumeration : IReadOnlyCollection<T>
         {
