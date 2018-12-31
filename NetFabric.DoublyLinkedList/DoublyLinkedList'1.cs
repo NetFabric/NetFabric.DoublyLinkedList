@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NetFabric
 {
-    public sealed partial class DoublyLinkedList<T>
+    public partial class DoublyLinkedList<T>
     {
         internal Node head;
         internal Node tail;

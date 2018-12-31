@@ -5,7 +5,7 @@
     <PackageId>NetFabric.DoublyLinkedList</PackageId>
     <Title>NetFabric.DoublyLinkedList</Title>
     <Description>An alternative to System.Collection.Generics.LinkedList with reverse operation and enumeration without allocation.</Description>
-    <Version>1.4.3</Version>
+    <Version>1.4.4</Version>
     <Authors>Antao Almada</Authors>
     <Copyright>Copyright 2018 Antao Almada</Copyright>
     <RepositoryUrl>https://github.com/NetFabric/NetFabric.DoublyLinkedList</RepositoryUrl>
@@ -15,7 +15,7 @@
     <LangVersion>latest</LangVersion>
     <Features>strict</Features>
     <RootNamespace>NetFabric</RootNamespace>
-    <PackageReleaseNotes>Lowered netstandard support to 1.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Unsealed class</PackageReleaseNotes>
     <!-- SourceLink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
