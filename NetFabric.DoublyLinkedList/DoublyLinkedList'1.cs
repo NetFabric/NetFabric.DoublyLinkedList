@@ -5,6 +5,8 @@ namespace NetFabric
 {
     public partial class DoublyLinkedList<T>
     {
+        public static readonly DoublyLinkedList<T> Empty = new DoublyLinkedList<T>();
+
         internal Node head;
         internal Node tail;
         int count;
