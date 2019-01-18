@@ -22,10 +22,10 @@ namespace NetFabric
                 new Enumerator(list);
 
             IEnumerator<T> IEnumerable<T>.GetEnumerator() => 
-                GetEnumerator();
+                new Enumerator(list);
 
             IEnumerator IEnumerable.GetEnumerator() => 
-                GetEnumerator();
+                new Enumerator(list);
 
             public struct Enumerator : IEnumerator<T>
             {
@@ -56,12 +56,12 @@ namespace NetFabric
                     current.Value;
 
                 object IEnumerator.Current => 
-                    Current;
+                    current.Value;
 
                 public bool MoveNext()
                 {
                     if (version != list.version)
-                        throw new InvalidOperationException();
+                        ThrowInvalidOperation();
 
                     switch (state)
                     {
@@ -74,18 +74,22 @@ namespace NetFabric
                         default:
                             return false;
                     }
+
+                    void ThrowInvalidOperation() => throw new InvalidOperationException();
                 }
 
                 public void Reset()
                 {
                     if (version != list.version)
-                        throw new InvalidOperationException();
+                        ThrowInvalidOperation();
 
                     current = list.head;
                     if (list.IsEmpty)
                         state = State.Empty;
                     else
                         state = State.First;
+
+                    void ThrowInvalidOperation() => throw new InvalidOperationException();
                 }
 
                 public void Dispose()

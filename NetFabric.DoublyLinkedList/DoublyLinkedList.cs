@@ -9,15 +9,18 @@ namespace NetFabric
         public static DoublyLinkedList<T> Append<T>(DoublyLinkedList<T> left, DoublyLinkedList<T> right) 
         {
             if (left is null)
-                throw new ArgumentNullException(nameof(left));
+                ThrowLeftNull();
 
             if (right is null)
-                throw new ArgumentNullException(nameof(right));
+                ThrowRightNull();
 
             var result = new DoublyLinkedList<T>();
             result.AddLast(left);
             result.AddLast(right);
             return result;
+
+            void ThrowLeftNull() => throw new ArgumentNullException(nameof(left));
+            void ThrowRightNull() => throw new ArgumentNullException(nameof(right));
         }
     }
 }

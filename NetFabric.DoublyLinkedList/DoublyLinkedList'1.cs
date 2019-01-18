@@ -47,18 +47,14 @@ namespace NetFabric
         public bool IsEmpty =>
             head is null;
 
-        void ValidateNode(Node node)
-        {
-            if (node is null)
-                throw new ArgumentNullException(nameof(node));
-
-            if (node.List != this)
-                throw new InvalidOperationException();
-        }
-
         public Node AddAfter(Node node, T value)
         {
-            ValidateNode(node);
+            if (node is null)
+                ThrowNodeNull();
+
+            if (node.List != this)
+                ThrowInvalidOperation();
+
             var result = new Node
             {
                 List = this,
@@ -74,11 +70,19 @@ namespace NetFabric
             count++;
             version++;
             return result;
+
+            void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
+            void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddBefore(Node node, T value)
         {
-            ValidateNode(node);
+            if (node is null)
+                ThrowNodeNull();
+
+            if (node.List != this)
+                ThrowInvalidOperation();
+
             var result = new Node
             {
                 List = this,
@@ -94,6 +98,9 @@ namespace NetFabric
             count++;
             version++;
             return result;
+
+            void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
+            void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddFirst(T value)
@@ -118,7 +125,7 @@ namespace NetFabric
         public void AddFirst(IEnumerable<T> collection)
         {
             if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
+                ThrowCollectionNull();
 
             Node tempHead = null;
             Node tempTail = null;
@@ -165,12 +172,14 @@ namespace NetFabric
                 head = tempHead;
             }
             version++;
+
+            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
         }
 
         public void AddFirst(IReadOnlyList<T> collection, bool reversed = false)
         {
             if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
+                ThrowCollectionNull();
 
             if (collection.Count == 0)
                 return;
@@ -202,6 +211,8 @@ namespace NetFabric
             }
             count += collection.Count;
             version++;
+
+            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
 
             void Assign()
             {
@@ -239,7 +250,7 @@ namespace NetFabric
         public void AddFirst(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
-                throw new ArgumentNullException(nameof(list));
+                ThrowListNull();
 
             if (list.Count == 0)
                 return;
@@ -273,6 +284,8 @@ namespace NetFabric
             }
             count += list.count;
             version++;
+
+            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
 
             void Assign()
             {
@@ -316,7 +329,7 @@ namespace NetFabric
         public void AddFirstFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
-                throw new ArgumentNullException(nameof(list));
+                ThrowListNull();
 
             if (list.Count == 0)
                 return;
@@ -342,6 +355,8 @@ namespace NetFabric
             count += list.count;
             version++;
             list.Invalidate();
+
+            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
 
             void Assign()
             {
@@ -404,7 +419,7 @@ namespace NetFabric
         public void AddLast(IEnumerable<T> collection)
         {
             if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
+                ThrowCollectionNull();
 
             Node tempHead = null;
             Node tempTail = null;
@@ -451,12 +466,14 @@ namespace NetFabric
                 tail = tempTail;
             }
             version++;
+
+            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
         }
 
         public void AddLast(IReadOnlyList<T> collection, bool reversed = false)
         {
             if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
+                ThrowCollectionNull();
 
             if (collection.Count == 0)
                 return;
@@ -488,6 +505,8 @@ namespace NetFabric
             }
             count += collection.Count;
             version++;
+
+            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
 
             void Assign()
             {
@@ -525,7 +544,7 @@ namespace NetFabric
         public void AddLast(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
-                throw new ArgumentNullException(nameof(list));
+                ThrowListNull();
 
             if (list.Count == 0)
                 return;
@@ -559,6 +578,8 @@ namespace NetFabric
             }
             count += list.count;
             version++;
+
+            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
 
             void Assign()
             {
@@ -602,7 +623,7 @@ namespace NetFabric
         public void AddLastFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
             if (list is null)
-                throw new ArgumentNullException(nameof(list));
+                ThrowListNull();
 
             if (list.Count == 0)
                 return;
@@ -628,6 +649,8 @@ namespace NetFabric
             count += list.count;
             version++;
             list.Invalidate();
+
+            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
 
             void Assign()
             {
@@ -829,7 +852,7 @@ namespace NetFabric
         public void RemoveFirst()
         {
             if (IsEmpty)
-                throw new InvalidOperationException();
+                ThrowInvalidOperation();
 
             var node = head;
             if (tail == node)
@@ -845,12 +868,14 @@ namespace NetFabric
             node.Invalidate();
             count--;
             version++;
+
+            void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public void RemoveLast()
         {
             if (IsEmpty)
-                throw new InvalidOperationException();
+                ThrowInvalidOperation();
 
             var node = tail;
             if (head == node)
@@ -866,6 +891,8 @@ namespace NetFabric
             node.Invalidate();
             count--;
             version++;
+
+            void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public DoublyLinkedList<T> Clone()
