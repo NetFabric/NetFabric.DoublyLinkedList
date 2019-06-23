@@ -290,7 +290,7 @@ namespace NetFabric
             void Assign()
             {
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -309,7 +309,7 @@ namespace NetFabric
             void AssignReversed()
             {
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -361,7 +361,7 @@ namespace NetFabric
             void Assign()
             {
                 var current = list.head;
-                while (!(current is null))
+                while (current is object)
                 {
                     current.List = this;
 
@@ -382,7 +382,7 @@ namespace NetFabric
                 tempHead = tempTail = current;
 
                 current = next;
-                while (!(current is null))
+                while (current is object)
                 {
                     next = current.Next;
 
@@ -584,7 +584,7 @@ namespace NetFabric
             void Assign()
             {
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -603,7 +603,7 @@ namespace NetFabric
             void AssignReversed()
             {
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -655,7 +655,7 @@ namespace NetFabric
             void Assign()
             {
                 var current = list.head;
-                while (!(current is null))
+                while (current is object)
                 {
                     current.List = this;
 
@@ -676,7 +676,7 @@ namespace NetFabric
                 tempHead = tempTail = current;
 
                 current = next;
-                while (!(current is null))
+                while (current is object)
                 {
                     next = current.Next;
 
@@ -694,7 +694,7 @@ namespace NetFabric
         public void Clear()
         {
             var current = head;
-            while (!(current is null))
+            while (current is object)
             {
                 var temp = current;
                 current = current.Next;
@@ -716,7 +716,7 @@ namespace NetFabric
             var node = head;
             if (value == null)
             {
-                while (!(node is null))
+                while (node is object)
                 {
                     if (node.Value == null)
                         return node;
@@ -727,7 +727,7 @@ namespace NetFabric
             else
             {
                 var comparer = EqualityComparer<T>.Default;
-                while (!(node is null))
+                while (node is object)
                 {
                     if (comparer.Equals(node.Value, value))
                         return node;
@@ -743,7 +743,7 @@ namespace NetFabric
             var node = tail;
             if (value == null)
             {
-                while (!(node is null))
+                while (node is object)
                 {
                     if (node.Value == null)
                         return node;
@@ -754,7 +754,7 @@ namespace NetFabric
             else
             {
                 var comparer = EqualityComparer<T>.Default;
-                while (!(node is null))
+                while (node is object)
                 {
                     if (comparer.Equals(node.Value, value))
                         return node;
@@ -906,7 +906,7 @@ namespace NetFabric
             };
 
             var current = head;
-            if (!(current is null))
+            if (current is object)
             {
                 list.head = list.tail = new Node
                 {
@@ -916,7 +916,7 @@ namespace NetFabric
                     Previous = null,
                 };
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -945,7 +945,7 @@ namespace NetFabric
             };
 
             var current = head;
-            if (!(current is null))
+            if (current is object)
             {
                 list.head = list.tail = new Node
                 {
@@ -955,7 +955,7 @@ namespace NetFabric
                     Previous = null,
                 };
                 current = current.Next;
-                while (!(current is null))
+                while (current is object)
                 {
                     var node = new Node
                     {
@@ -980,7 +980,7 @@ namespace NetFabric
 
             Node temp;
             var current = head;
-            while (!(current is null))
+            while (current is object)
             {
                 temp = current.Next;
                 current.Next = current.Previous;

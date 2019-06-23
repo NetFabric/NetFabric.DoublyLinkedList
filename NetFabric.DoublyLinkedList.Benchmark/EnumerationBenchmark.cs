@@ -25,7 +25,7 @@ namespace NetFabric.Benchmark
         {
             var count = 0;
             var current = linkedList.First;
-            while (!(current is null))
+            while (current is object)
             {
                 count += current.Value;
                 current = current.Next;
@@ -47,7 +47,7 @@ namespace NetFabric.Benchmark
         {
             var count = 0;
             var current = linkedList.Last;
-            while (!(current is null))
+            while (current is object)
             {
                 count += current.Value;
                 current = current.Previous;
@@ -69,7 +69,7 @@ namespace NetFabric.Benchmark
         {
             var count = 0;
             var current = doublyLinkedList.First;
-            while (!(current is null))
+            while (current is object)
             {
                 count += current.Value;
                 current = current.Next;
@@ -91,7 +91,7 @@ namespace NetFabric.Benchmark
         {
             var count = 0;
             var current = doublyLinkedList.Last;
-            while (!(current is null))
+            while (current is object)
             {
                 count += current.Value;
                 current = current.Previous;

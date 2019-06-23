@@ -67,7 +67,7 @@ namespace NetFabric
                     {
                         case State.Normal:
                             current = current.Next;
-                            return !(current is null);
+                            return current is object;
                         case State.First:
                             state = State.Normal;
                             return true;
