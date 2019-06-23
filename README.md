@@ -39,7 +39,7 @@ outputs
 4321
 ```
 
-Although these enumerators are optimized for performance, they perform a bit more method calls and conditions than simply using a `while` loop to go throught the `Node` references. The performance penalty can be seen on the benchmarks above. The advantage is that these can be used with [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) or any third-party method that takes `IEnumerable`, `IEnumerable<T>` or `IReadOnlyCollection<T>` as parameter.
+These methods allow the use of LINQ on either direction:
 
 ```csharp
 var list = new DoublyLinkedList<int>(new[] {1, 2, 3, 4});
@@ -48,6 +48,17 @@ Console.Write(list.EnumerateReversed().First());
 outputs
 ```
 4
+```
+
+Although these enumerators are optimized for performance, they perform a bit more method calls and conditions than simply using a `while` loop to go throught the `Node` references. The performance penalty can be seen on the benchmarks above. 
+
+```csharp
+var current = doublyLinkedList.Last;
+while (current is object)
+{
+    Console.Write(current.Value);
+    current = current.Previous;
+}
 ```
 
 ## `AddFirst()` and `AddLast()`
