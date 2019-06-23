@@ -24,7 +24,7 @@ steps:
   inputs:
     command: 'test'
     projects: 'NetFabric.DoublyLinkedList.Tests/NetFabric.DoublyLinkedList.Tests.csproj'    
-    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    arguments: '/p:CollectCoverage=true /p:Exclude="[xunit.*]*" /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     workingDirectory: 'NetFabric.DoublyLinkedList.Tests'
 - task: DotNetCoreCLI@2
   displayName: Report Generator
@@ -32,7 +32,7 @@ steps:
     command: 'custom'
     projects: 'NetFabric.DoublyLinkedList.Tests/NetFabric.DoublyLinkedList.Tests.csproj'
     custom: 'reportgenerator'
-    arguments: '-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports -tag:$(Build.BuildNumber) -reportTypes:htmlInline'
+    arguments: '-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports'
     workingDirectory: 'NetFabric.DoublyLinkedList.Tests'
 - task: PublishCodeCoverageResults@1
   inputs:
