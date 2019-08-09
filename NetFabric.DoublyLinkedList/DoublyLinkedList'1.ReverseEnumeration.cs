@@ -1,12 +1,14 @@
-﻿using System;
+﻿using NetFabric.Hyperlinq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace NetFabric
 {
     public partial class DoublyLinkedList<T>
     {
-        public readonly struct ReverseEnumeration : IReadOnlyCollection<T>
+        public readonly struct ReverseEnumeration : IValueReadOnlyCollection<T, ReverseEnumeration.Enumerator>
         {
             readonly DoublyLinkedList<T> list;
 
@@ -52,8 +54,11 @@ namespace NetFabric
                         state = State.First;
                 }
 
-                public T Current => 
-                    current.Value;
+                public T Current
+                {
+                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                    get => current.Value;
+                }
 
                 object IEnumerator.Current => 
                     current.Value;
