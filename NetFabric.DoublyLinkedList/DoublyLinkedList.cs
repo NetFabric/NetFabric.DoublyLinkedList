@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NetFabric.DoublyLinkedList.Tests")]
 
@@ -6,6 +7,7 @@ namespace NetFabric
 {
     public static class DoublyLinkedList
     {
+        [Pure]
         public static DoublyLinkedList<T> Append<T>(DoublyLinkedList<T> left, DoublyLinkedList<T> right) 
         {
             if (left is null)

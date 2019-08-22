@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace NetFabric
@@ -20,16 +21,17 @@ namespace NetFabric
             public int Count =>
                 list.count;
 
-            public Enumerator GetEnumerator() => 
+            [Pure]
+            public readonly Enumerator GetEnumerator() => 
                 new Enumerator(list);
 
-            IEnumerator<T> IEnumerable<T>.GetEnumerator() => 
-                new Enumerator(list);
+            readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
+                ValueEnumerator.ToEnumerator<T, Enumerator>(new Enumerator(list));
 
-            IEnumerator IEnumerable.GetEnumerator() => 
-                new Enumerator(list);
+            readonly IEnumerator IEnumerable.GetEnumerator() =>
+                ValueEnumerator.ToEnumerator<T, Enumerator>(new Enumerator(list));
 
-            public struct Enumerator : IEnumerator<T>
+            public struct Enumerator : IValueEnumerator<T>
             {
                 enum State
                 {
@@ -47,21 +49,15 @@ namespace NetFabric
                 {
                     this.list = list;
                     version = list.version;
-                    current = list.tail;
-                    if (list.IsEmpty)
-                        state = State.Empty;
-                    else
-                        state = State.First;
+                    current = null;
+                    state = list.IsEmpty ? State.Empty : State.First;
                 }
 
-                public T Current
+                public readonly T Current
                 {
                     [MethodImpl(MethodImplOptions.AggressiveInlining)]
                     get => current.Value;
                 }
-
-                object IEnumerator.Current => 
-                    current.Value;
 
                 public bool MoveNext()
                 {
@@ -74,32 +70,14 @@ namespace NetFabric
                             current = current.Previous;
                             return current is object;
                         case State.First:
+                            current = list.tail;
                             state = State.Normal;
                             return true;
                         default:
                             return false;
                     }
 
-                    void ThrowInvalidOperation() => throw new InvalidOperationException();
-                }
-
-                public void Reset()
-                {
-                    if (version != list.version)
-                        ThrowInvalidOperation();
-
-                    current = list.tail;
-                    if (list.IsEmpty)
-                        state = State.Empty;
-                    else
-                        state = State.First;
-
-                    void ThrowInvalidOperation() => throw new InvalidOperationException();
-                }
-
-                public void Dispose()
-                {
-                    // nothing to do
+                    static void ThrowInvalidOperation() => throw new InvalidOperationException();
                 }
             }
         }

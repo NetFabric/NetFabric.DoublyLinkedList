@@ -28,28 +28,5 @@ namespace NetFabric.Tests
             // Assert
             enumeration.Should().Equal(collection);
         }
-
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Reset(IReadOnlyList<int> collection)
-        {
-            // Arrange
-            var list = new DoublyLinkedList<int>(collection);
-            using (var enumerator = list.EnumerateForward().GetEnumerator())
-            {
-                var moveNext = enumerator.MoveNext();
-                int first = -1;
-                if (moveNext)
-                    first = enumerator.Current;
-
-                // Act
-                enumerator.Reset();
-
-                // Assert
-                enumerator.MoveNext().Should().Be(moveNext);
-                if (moveNext)
-                    enumerator.Current.Should().Be(first);
-            }
-        }
     }
 }

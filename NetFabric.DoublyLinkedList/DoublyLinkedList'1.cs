@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace NetFabric
 {
@@ -72,7 +73,7 @@ namespace NetFabric
             return result;
 
             void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
-            void ThrowInvalidOperation() => throw new InvalidOperationException();
+            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddBefore(Node node, T value)
@@ -100,7 +101,7 @@ namespace NetFabric
             return result;
 
             void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
-            void ThrowInvalidOperation() => throw new InvalidOperationException();
+            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddFirst(T value)
@@ -184,8 +185,8 @@ namespace NetFabric
             if (collection.Count == 0)
                 return;
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node tempHead;
+            Node tempTail;
             tempHead = tempTail = new Node
             {
                 List = this,
@@ -334,8 +335,8 @@ namespace NetFabric
             if (list.Count == 0)
                 return;
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node tempHead;
+            Node tempTail;
             if (reversed)
                 AssignReversed();
             else
@@ -478,8 +479,8 @@ namespace NetFabric
             if (collection.Count == 0)
                 return;
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node tempHead;
+            Node tempTail;
             tempHead = tempTail = new Node
             {
                 List = this,
@@ -549,8 +550,8 @@ namespace NetFabric
             if (list.Count == 0)
                 return;
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node tempHead;
+            Node tempTail;
             var current = list.head;
             tempHead = tempTail = new Node
             {
@@ -628,8 +629,8 @@ namespace NetFabric
             if (list.Count == 0)
                 return;
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node tempHead;
+            Node tempTail;
             if (reversed)
                 AssignReversed();
             else
@@ -711,6 +712,7 @@ namespace NetFabric
             version++;
         }
 
+        [Pure]
         public Node Find(T value)
         {
             var node = head;
@@ -738,6 +740,7 @@ namespace NetFabric
             return null;
         }
 
+        [Pure]
         public Node FindLast(T value)
         {
             var node = tail;
@@ -765,9 +768,11 @@ namespace NetFabric
             return null;
         }
 
+        [Pure]
         public ForwardEnumeration EnumerateForward() =>
             new ForwardEnumeration(this);
 
+        [Pure]
         public ReverseEnumeration EnumerateReversed() =>
             new ReverseEnumeration(this);
 
@@ -869,7 +874,7 @@ namespace NetFabric
             count--;
             version++;
 
-            void ThrowInvalidOperation() => throw new InvalidOperationException();
+            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public void RemoveLast()
@@ -892,9 +897,10 @@ namespace NetFabric
             count--;
             version++;
 
-            void ThrowInvalidOperation() => throw new InvalidOperationException();
+            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
+        [Pure]
         public DoublyLinkedList<T> Clone()
         {
             var list = new DoublyLinkedList<T>
@@ -934,6 +940,7 @@ namespace NetFabric
             return list;
         }
 
+        [Pure]
         public DoublyLinkedList<T> Reverse()
         {
             var list = new DoublyLinkedList<T>
