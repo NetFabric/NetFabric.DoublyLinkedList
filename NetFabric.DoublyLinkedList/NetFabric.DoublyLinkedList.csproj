@@ -8,7 +8,7 @@
     <Version>2.1.0</Version>
     <Authors>Antao Almada</Authors>
     <Copyright>Copyright 2018-2019 Antao Almada</Copyright>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIconUrl>https://user-images.githubusercontent.com/534533/49182105-390f3a80-f351-11e8-8e84-c785cddd2995.png</PackageIconUrl>
     <PackageTags>collections, data structures, algorithms, list</PackageTags>
     <RootNamespace>NetFabric</RootNamespace>
@@ -21,7 +21,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="..\Licenses\LICENSE.txt" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
