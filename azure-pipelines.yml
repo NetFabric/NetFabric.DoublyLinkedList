@@ -14,10 +14,16 @@ steps:
     versionSpec: '4.3.0'
     checkLatest: true
 - task: UseDotNet@2
-  displayName: 'Use .NET Core SDK'
+  displayName: 'Use .NET Core 2.1 SDK'
   inputs:
     packageType: sdk
-    version: 3.0.100
+    version: 2.1
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+- task: UseDotNet@2
+  displayName: 'Use .NET Core 3.0 SDK'
+  inputs:
+    packageType: sdk
+    version: 3.0
     installationPath: $(Agent.ToolsDirectory)/dotnet
 - task: DotNetCoreCLI@2
   displayName: Build
