@@ -1,7 +1,6 @@
-﻿using System;
+﻿using NetFabric.Assertive;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -27,15 +26,14 @@ namespace NetFabric.Tests
             var result = list.Reverse();
 
             // Assert
-            result.Version.Should().Be(0);
-            result.Count.Should().Be(list.Count);
-            // result.EnumerateForward().Should().AllBeEquivalentTo(
-            //     new { List = result }, 
-            //     options => options
-            //         .Including(o => o.List));
-            result.EnumerateForward().Should().NotBeSameAs(list.EnumerateForward());
-            result.EnumerateForward().Should().Equal(expected);
-            result.EnumerateReversed().Should().Equal(collection);
+            result.Version.Must()
+                .BeEqualTo(0);
+            result.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            result.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(collection);
         }
 
         [Theory]
@@ -50,13 +48,16 @@ namespace NetFabric.Tests
             list.ReverseInPlace();
 
             // Assert
-            if(list.Count < 2)
-                list.Version.Should().Be(version);
+            if (list.Count < 2)
+                list.Version.Must().BeEqualTo(version);
             else
-                list.Version.Should().NotBe(version);
-            list.Count.Should().Be(list.Count);
-            list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(collection);
+                list.Version.Must().BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(collection);
         }
     }
 }

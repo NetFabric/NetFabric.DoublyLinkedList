@@ -1,7 +1,7 @@
+using NetFabric.Assertive;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -18,11 +18,10 @@ namespace NetFabric.Tests
             Action action = () => list.AddAfter(null, 1);
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("node");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "node");
         }
 
         [Fact]
@@ -37,7 +36,8 @@ namespace NetFabric.Tests
             Action action = () => list.AddAfter(node, 1);
 
             // Assert
-            action.Should().ThrowExactly<InvalidOperationException>();
+            action.Must()
+                .Throw<InvalidOperationException>();
         }
 
         public static TheoryData<IReadOnlyList<int>, int, int, IReadOnlyList<int>> ItemData =>
@@ -60,10 +60,14 @@ namespace NetFabric.Tests
             list.AddAfter(node, item);
 
             // Assert
-            list.Count.Should().Be(expected.Count);
-            list.Version.Should().NotBe(version);
-            list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(expected.Reverse());
+            list.Version.Must()
+                .BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
         }
     }
 }

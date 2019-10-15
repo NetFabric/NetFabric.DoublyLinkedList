@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
+using NetFabric.Assertive;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -38,12 +37,15 @@ namespace NetFabric.Tests
             // Assert
             if(shouldFind)
             {
-                result.Should().NotBeNull();
-                result.Value.Should().Be(value);
+                result.Must()
+                    .BeNotNull();
+                //result.Value.Must()
+                //    .BeEqualTo(value);
             }
             else
             {
-                result.Should().BeNull();
+                result.Must()
+                    .BeNull();
             }
         }
 
@@ -65,7 +67,8 @@ namespace NetFabric.Tests
             var result = list.Find(value);
 
             // Assert
-            result.Should().BeSameAs(list.First);
+            result.Must()
+                .BeSameAs(list.First);
         }
     }
 }

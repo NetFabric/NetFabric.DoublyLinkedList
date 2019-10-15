@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NetFabric.Assertive;
+using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -26,7 +26,9 @@ namespace NetFabric.Tests
             var enumeration = list.EnumerateForward();
 
             // Assert
-            enumeration.Should().Equal(collection);
+            enumeration.Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(collection);
         }
     }
 }

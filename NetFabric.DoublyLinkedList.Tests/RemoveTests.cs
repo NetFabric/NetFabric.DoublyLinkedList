@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NetFabric.Assertive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -45,14 +45,17 @@ namespace NetFabric.Tests
             var result = list.Remove(item);
 
             // Assert
-            result.Should().Be(expected);
-            list.Count.Should().Be(expectedCollection.Count);
+            result.Must().BeEqualTo(expected);
             if (expected)
-                list.Version.Should().NotBe(version);
+                list.Version.Must().BeNotEqualTo(version);
             else
-                list.Version.Should().Be(version);
-            list.EnumerateForward().Should().Equal(expectedCollection);
-            list.EnumerateReversed().Should().Equal(expectedCollection.Reverse());
+                list.Version.Must().BeEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection.Reverse());
         }
 
         [Theory]
@@ -68,14 +71,18 @@ namespace NetFabric.Tests
             var result = list.RemoveLast(item);
 
             // Assert
-            result.Should().Be(expected);
-            list.Count.Should().Be(expectedCollection.Count);
+            result.Must().
+                BeEqualTo(expected);
             if (expected)
-                list.Version.Should().NotBe(version);
+                list.Version.Must().BeNotEqualTo(version);
             else
-                list.Version.Should().Be(version);
-            list.EnumerateForward().Should().Equal(expectedCollection);
-            list.EnumerateReversed().Should().Equal(expectedCollection.Reverse());
+                list.Version.Must().BeEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection.Reverse());
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>> RemoveFirstData =>
@@ -104,10 +111,14 @@ namespace NetFabric.Tests
             list.RemoveFirst();
 
             // Assert
-            list.Count.Should().Be(expectedCollection.Count);
-            list.Version.Should().NotBe(version);
-            list.EnumerateForward().Should().Equal(expectedCollection);
-            list.EnumerateReversed().Should().Equal(expectedCollection.Reverse());
+            list.Version.Must()
+                .BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection.Reverse());
         }
 
         [Theory]
@@ -122,15 +133,19 @@ namespace NetFabric.Tests
             list.RemoveLast();
 
             // Assert
-            list.Count.Should().Be(expectedCollection.Count);
-            list.Version.Should().NotBe(version);
-            list.EnumerateForward().Should().Equal(expectedCollection);
-            list.EnumerateReversed().Should().Equal(expectedCollection.Reverse());
+            list.Version.Must()
+                .BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expectedCollection.Reverse());
         }
 
         [Theory]
         [MemberData(nameof(RemoveFirstData))]
-        void RemoveFirst_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveFirst_WithEmpty_MustThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoublyLinkedList<int>();
@@ -139,12 +154,13 @@ namespace NetFabric.Tests
             Action action = () => list.RemoveFirst();
 
             // Assert
-            action.Should().Throw<InvalidOperationException>();
+            action.Must()
+                .Throw<InvalidOperationException>();
         }
 
         [Theory]
         [MemberData(nameof(RemoveFirstData))]
-        void RemoveLast_WithEmpty_ShouldThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
+        void RemoveLast_WithEmpty_MustThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
         {
             // Arrange
             var list = new DoublyLinkedList<int>();
@@ -153,7 +169,8 @@ namespace NetFabric.Tests
             Action action = () => list.RemoveLast();
 
             // Assert
-            action.Should().Throw<InvalidOperationException>();
+            action.Must()
+                .Throw<InvalidOperationException>();
         }
 
     }

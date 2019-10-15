@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
+using NetFabric.Assertive;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -17,11 +17,10 @@ namespace NetFabric.Tests
             Action action = () => DoublyLinkedList.Append(null, new DoublyLinkedList<int>());
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("left");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "left");
         }
 
         [Fact]
@@ -33,11 +32,10 @@ namespace NetFabric.Tests
             Action action = () => DoublyLinkedList.Append(new DoublyLinkedList<int>(), null);
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("right");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "right");
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>> AppendData =>
@@ -67,15 +65,24 @@ namespace NetFabric.Tests
             var result = DoublyLinkedList.Append(leftList, rightList);
 
             // Assert
-            leftList.Version.Should().Be(leftVersion);
-            leftList.EnumerateForward().Should().Equal(left);
+            leftList.Version.Must()
+                .BeEqualTo(leftVersion);
+            leftList.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(left);
 
-            rightList.Version.Should().Be(rightVersion);
-            rightList.EnumerateForward().Should().Equal(right);
+            rightList.Version.Must()
+                .BeEqualTo(rightVersion);
+            rightList.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(right);
 
-            result.Count.Should().Be(leftList.Count + rightList.Count);
-            result.EnumerateForward().Should().Equal(expected);
-            result.EnumerateReversed().Should().Equal(expected.Reverse());        
+            result.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            result.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());        
         }
     }
 }
