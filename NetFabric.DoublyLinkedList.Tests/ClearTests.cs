@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
+using NetFabric.Assertive;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -27,10 +27,14 @@ namespace NetFabric.Tests
             list.Clear();
 
             // Assert
-            list.Count.Should().Be(0);
-            list.Version.Should().NotBe(version);
-            list.EnumerateForward().Should().BeEmpty();
-            list.EnumerateReversed().Should().BeEmpty();
+            list.Version.Must()
+                .BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEmpty();
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEmpty();
         }
     }
 }

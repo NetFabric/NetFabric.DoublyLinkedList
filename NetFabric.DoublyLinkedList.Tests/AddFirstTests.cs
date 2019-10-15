@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NetFabric.Assertive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using Xunit;
 
 namespace NetFabric.Tests
@@ -18,11 +18,10 @@ namespace NetFabric.Tests
             Action action = () => list.AddFirst((IEnumerable<int>)null);
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("collection");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "collection");
         }
 
         [Fact]
@@ -35,11 +34,10 @@ namespace NetFabric.Tests
             Action action = () => list.AddFirst((IReadOnlyList<int>)null);
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("collection");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "collection");
         }
 
         [Fact]
@@ -52,11 +50,10 @@ namespace NetFabric.Tests
             Action action = () => list.AddFirst((DoublyLinkedList<int>)null);
 
             // Assert
-            action.Should()
-                .ThrowExactly<ArgumentNullException>()
-                .And
-                .ParamName.Should()
-                .Be("list");
+            action.Must()
+                .Throw<ArgumentNullException>()
+                .EvaluatesTrue(exception =>
+                    exception.ParamName == "list");
         }
 
         public static TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>> ItemData =>
@@ -79,12 +76,16 @@ namespace NetFabric.Tests
             list.AddFirst(item);
 
             // Assert
-            list.Count.Should().Be(expected.Count);
-            list.Version.Should().NotBe(version);
-            list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(expected.Reverse());
+            list.Version.Must()
+                .BeNotEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
         }
-        
+
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>> CollectionData =>
             new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>>
             {
@@ -111,13 +112,16 @@ namespace NetFabric.Tests
             list.AddFirst(items);
 
             // Assert
-            list.Count.Should().Be(expected.Count);
             if (isMutated)
-                list.Version.Should().NotBe(version);
+                list.Version.Must().BeNotEqualTo(version);
             else
-                list.Version.Should().Be(version);
-            list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(expected.Reverse());
+                list.Version.Must().BeEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
         }
 
         [Theory]
@@ -132,13 +136,16 @@ namespace NetFabric.Tests
             list.AddFirst(items);
 
             // Assert
-            list.Count.Should().Be(expected.Count);
             if (isMutated)
-                list.Version.Should().NotBe(version);
+                list.Version.Must().BeNotEqualTo(version);
             else
-                list.Version.Should().Be(version);
-            list.EnumerateForward().Should().Equal(expected);
-            list.EnumerateReversed().Should().Equal(expected.Reverse());
+                list.Version.Must().BeEqualTo(version);
+            list.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            list.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, bool, IReadOnlyList<int>> ListData =>
@@ -177,13 +184,16 @@ namespace NetFabric.Tests
             left.AddFirst(right, reversed);
 
             // Assert
-            left.Count.Should().Be(expected.Count);
             if (isMutated)
-                left.Version.Should().NotBe(version);
+                left.Version.Must().BeNotEqualTo(version);
             else
-                left.Version.Should().Be(version);
-            left.EnumerateForward().Should().Equal(expected);
-            left.EnumerateReversed().Should().Equal(expected.Reverse());
+                left.Version.Must().BeEqualTo(version);
+            left.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            left.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
         }
 
         [Theory]
@@ -199,14 +209,19 @@ namespace NetFabric.Tests
             left.AddFirstFrom(right, reversed);
 
             // Assert
-            left.Count.Should().Be(expected.Count);
             if (isMutated)
-                left.Version.Should().NotBe(version);
+                left.Version.Must().BeNotEqualTo(version);
             else
-                left.Version.Should().Be(version);
-            left.EnumerateForward().Should().Equal(expected);
-            left.EnumerateReversed().Should().Equal(expected.Reverse());
-            right.Count.Should().Be(0);
+                left.Version.Must().BeEqualTo(version);
+            left.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected);
+            left.EnumerateReversed().Must()
+                .BeEnumerable<int>()
+                .BeEqualTo(expected.Reverse());
+            right.EnumerateForward().Must()
+                .BeEnumerable<int>()
+                .BeEmpty();
         }
     }
 }
