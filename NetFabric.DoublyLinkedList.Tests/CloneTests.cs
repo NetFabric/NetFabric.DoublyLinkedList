@@ -30,10 +30,10 @@ namespace NetFabric.Tests
             result.Version.Must()
                 .BeEqualTo(0);
             result.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             result.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(collection.Reverse());
         }
     }

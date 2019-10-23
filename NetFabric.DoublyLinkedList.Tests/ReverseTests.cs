@@ -29,10 +29,10 @@ namespace NetFabric.Tests
             result.Version.Must()
                 .BeEqualTo(0);
             result.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             result.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(collection);
         }
 
@@ -53,10 +53,10 @@ namespace NetFabric.Tests
             else
                 list.Version.Must().BeNotEqualTo(version);
             list.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             list.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(collection);
         }
     }

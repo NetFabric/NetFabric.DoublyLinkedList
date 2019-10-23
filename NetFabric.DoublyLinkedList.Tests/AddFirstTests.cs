@@ -79,10 +79,10 @@ namespace NetFabric.Tests
             list.Version.Must()
                 .BeNotEqualTo(version);
             list.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             list.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
@@ -117,10 +117,10 @@ namespace NetFabric.Tests
             else
                 list.Version.Must().BeEqualTo(version);
             list.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             list.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
@@ -141,10 +141,10 @@ namespace NetFabric.Tests
             else
                 list.Version.Must().BeEqualTo(version);
             list.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             list.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
@@ -189,10 +189,10 @@ namespace NetFabric.Tests
             else
                 left.Version.Must().BeEqualTo(version);
             left.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             left.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
@@ -214,13 +214,13 @@ namespace NetFabric.Tests
             else
                 left.Version.Must().BeEqualTo(version);
             left.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             left.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
             right.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEmpty();
         }
     }

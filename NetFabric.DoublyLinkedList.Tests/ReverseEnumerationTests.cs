@@ -27,7 +27,7 @@ namespace NetFabric.Tests
 
             // Assert
             enumeration.Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
         }
     }

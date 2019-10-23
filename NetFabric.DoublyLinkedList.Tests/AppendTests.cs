@@ -68,20 +68,20 @@ namespace NetFabric.Tests
             leftList.Version.Must()
                 .BeEqualTo(leftVersion);
             leftList.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(left);
 
             rightList.Version.Must()
                 .BeEqualTo(rightVersion);
             rightList.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(right);
 
             result.EnumerateForward().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
             result.EnumerateReversed().Must()
-                .BeEnumerable<int>()
+                .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());        
         }
     }
