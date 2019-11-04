@@ -10,7 +10,6 @@
     <Copyright>Copyright 2018-2019 Antao Almada</Copyright>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageIconUrl>https://user-images.githubusercontent.com/534533/49182105-390f3a80-f351-11e8-8e84-c785cddd2995.png</PackageIconUrl>
     <PackageTags>collections, data structures, algorithms, list</PackageTags>
     <RootNamespace>NetFabric</RootNamespace>
     <PackageReleaseNotes>Use non-disposable enumerators on foreach.</PackageReleaseNotes>
