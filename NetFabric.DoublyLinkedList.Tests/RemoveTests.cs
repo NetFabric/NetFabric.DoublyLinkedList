@@ -143,9 +143,8 @@ namespace NetFabric.Tests
                 .BeEqualTo(expectedCollection.Reverse());
         }
 
-        [Theory]
-        [MemberData(nameof(RemoveFirstData))]
-        void RemoveFirst_WithEmpty_MustThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
+        [Fact]
+        void RemoveFirst_WithEmpty_MustThrow()
         {
             // Arrange
             var list = new DoublyLinkedList<int>();
@@ -158,9 +157,8 @@ namespace NetFabric.Tests
                 .Throw<InvalidOperationException>();
         }
 
-        [Theory]
-        [MemberData(nameof(RemoveFirstData))]
-        void RemoveLast_WithEmpty_MustThrow(IReadOnlyList<int> collection, IReadOnlyCollection<int> expectedCollection)
+        [Fact]
+        void RemoveLast_WithEmpty_MustThrow()
         {
             // Arrange
             var list = new DoublyLinkedList<int>();

@@ -1,0 +1,31 @@
+name: .NET
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore -c:Release
+      
+    - name: Tests with coverage
+      run: dotnet test ./NetFabric.DoublyLinkedList.Tests/NetFabric.DoublyLinkedList.Tests.csproj --no-build -c:Release -f:net5.0 -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:CoverletOutput=TestResults/
+      
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./NetFabric.DoublyLinkedList.Tests/TestResults/coverage.net5.0.info

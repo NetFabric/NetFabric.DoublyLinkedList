@@ -20,7 +20,7 @@ namespace NetFabric.Tests
             // Assert
             action.Must()
                 .Throw<ArgumentNullException>()
-                .EvaluatesTrue(exception =>
+                .EvaluateTrue(exception =>
                     exception.ParamName == "collection");
         }
 
@@ -36,7 +36,7 @@ namespace NetFabric.Tests
             // Assert
             action.Must()
                 .Throw<ArgumentNullException>()
-                .EvaluatesTrue(exception =>
+                .EvaluateTrue(exception =>
                     exception.ParamName == "collection");
         }
 
@@ -52,7 +52,7 @@ namespace NetFabric.Tests
             // Assert
             action.Must()
                 .Throw<ArgumentNullException>()
-                .EvaluatesTrue(exception =>
+                .EvaluateTrue(exception =>
                     exception.ParamName == "list");
         }
 
