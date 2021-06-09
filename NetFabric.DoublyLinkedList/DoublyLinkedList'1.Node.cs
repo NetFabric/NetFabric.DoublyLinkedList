@@ -4,11 +4,11 @@
     {
         public sealed class Node
         {
-            public DoublyLinkedList<T> List { get; internal set; }
+            public DoublyLinkedList<T>? List { get; internal set; }
 
-            public Node Next { get; internal set; }
+            public Node? Next { get; internal set; }
 
-            public Node Previous { get; internal set; }
+            public Node? Previous { get; internal set; }
 
             public T Value { get; set; }
 

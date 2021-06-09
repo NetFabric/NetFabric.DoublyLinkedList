@@ -8,11 +8,11 @@ namespace NetFabric.Tests
     public class ReverseEnumerationTests
     {
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> Data =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> 
+            new()
             {
-                { new int[] { },                new int[] { } },
-                { new int[] { 1 },              new int[] { 1 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { 5, 4, 3, 2, 1 } },
+                { Array.Empty<int>(),       Array.Empty<int>() },
+                { new[] { 1 },              new[] { 1 } },
+                { new[] { 1, 2, 3, 4, 5 },  new[] { 5, 4, 3, 2, 1 } },
             };
 
         [Theory]
@@ -23,7 +23,7 @@ namespace NetFabric.Tests
             var list = new DoublyLinkedList<int>(collection);
 
             // Act
-            var enumeration = list.EnumerateReversed();
+            var enumeration = list.Backward;
 
             // Assert
             enumeration.Must()

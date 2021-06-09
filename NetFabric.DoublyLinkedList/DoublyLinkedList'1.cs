@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
 namespace NetFabric
 {
     public partial class DoublyLinkedList<T>
     {
-        public static readonly DoublyLinkedList<T> Empty = new DoublyLinkedList<T>();
+        public static readonly DoublyLinkedList<T> Empty = new();
 
-        internal Node head;
-        internal Node tail;
+        internal Node? head;
+        internal Node? tail;
         int count;
         int version;
 
@@ -33,10 +34,10 @@ namespace NetFabric
             AddLast(collection, reversed);
         }
 
-        public Node First =>
+        public Node? First =>
             head;
 
-        public Node Last =>
+        public Node? Last =>
             tail;
 
         public int Count =>
@@ -50,11 +51,8 @@ namespace NetFabric
 
         public Node AddAfter(Node node, T value)
         {
-            if (node is null)
-                ThrowNodeNull();
-
-            if (node.List != this)
-                ThrowInvalidOperation();
+            if (node is null) Throw.ArgumentNullException(nameof(node));
+            if (node.List != this) Throw.InvalidOperationException();
 
             var result = new Node
             {
@@ -71,18 +69,12 @@ namespace NetFabric
             count++;
             version++;
             return result;
-
-            void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
-            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddBefore(Node node, T value)
         {
-            if (node is null)
-                ThrowNodeNull();
-
-            if (node.List != this)
-                ThrowInvalidOperation();
+            if (node is null) Throw.ArgumentNullException(nameof(node));
+            if (node.List != this) Throw.InvalidOperationException();
 
             var result = new Node
             {
@@ -99,9 +91,6 @@ namespace NetFabric
             count++;
             version++;
             return result;
-
-            void ThrowNodeNull() => throw new ArgumentNullException(nameof(node));
-            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public Node AddFirst(T value)
@@ -125,11 +114,10 @@ namespace NetFabric
 
         public void AddFirst(IEnumerable<T> collection)
         {
-            if (collection is null)
-                ThrowCollectionNull();
+            if (collection is null) Throw.ArgumentNullException(nameof(collection));
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node? tempHead = null;
+            Node? tempTail = null;
             using (var enumerator = collection.GetEnumerator())
             {
                 if (enumerator.MoveNext())
@@ -173,14 +161,11 @@ namespace NetFabric
                 head = tempHead;
             }
             version++;
-
-            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
         }
 
         public void AddFirst(IReadOnlyList<T> collection, bool reversed = false)
         {
-            if (collection is null)
-                ThrowCollectionNull();
+            if (collection is null) Throw.ArgumentNullException(nameof(collection));
 
             if (collection.Count == 0)
                 return;
@@ -212,8 +197,6 @@ namespace NetFabric
             }
             count += collection.Count;
             version++;
-
-            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
 
             void Assign()
             {
@@ -250,8 +233,7 @@ namespace NetFabric
 
         public void AddFirst(DoublyLinkedList<T> list, bool reversed = false)
         {
-            if (list is null)
-                ThrowListNull();
+            if (list is null) Throw.ArgumentNullException(nameof(list));
 
             if (list.Count == 0)
                 return;
@@ -286,12 +268,10 @@ namespace NetFabric
             count += list.count;
             version++;
 
-            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
-
             void Assign()
             {
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -310,7 +290,7 @@ namespace NetFabric
             void AssignReversed()
             {
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -329,8 +309,7 @@ namespace NetFabric
 
         public void AddFirstFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
-            if (list is null)
-                ThrowListNull();
+            if (list is null) Throw.ArgumentNullException(nameof(list));
 
             if (list.Count == 0)
                 return;
@@ -357,12 +336,10 @@ namespace NetFabric
             version++;
             list.Invalidate();
 
-            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
-
             void Assign()
             {
                 var current = list.head;
-                while (current is object)
+                while (current is not null)
                 {
                     current.List = this;
 
@@ -383,7 +360,7 @@ namespace NetFabric
                 tempHead = tempTail = current;
 
                 current = next;
-                while (current is object)
+                while (current is not null)
                 {
                     next = current.Next;
 
@@ -419,11 +396,10 @@ namespace NetFabric
 
         public void AddLast(IEnumerable<T> collection)
         {
-            if (collection is null)
-                ThrowCollectionNull();
+            if (collection is null) Throw.ArgumentNullException(nameof(collection));
 
-            Node tempHead = null;
-            Node tempTail = null;
+            Node? tempHead = null;
+            Node? tempTail = null;
             using (var enumerator = collection.GetEnumerator())
             {
                 if (enumerator.MoveNext())
@@ -467,14 +443,11 @@ namespace NetFabric
                 tail = tempTail;
             }
             version++;
-
-            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
         }
 
         public void AddLast(IReadOnlyList<T> collection, bool reversed = false)
         {
-            if (collection is null)
-                ThrowCollectionNull();
+            if (collection is null) Throw.ArgumentNullException(nameof(collection));
 
             if (collection.Count == 0)
                 return;
@@ -506,8 +479,6 @@ namespace NetFabric
             }
             count += collection.Count;
             version++;
-
-            void ThrowCollectionNull() => throw new ArgumentNullException(nameof(collection));
 
             void Assign()
             {
@@ -544,8 +515,7 @@ namespace NetFabric
 
         public void AddLast(DoublyLinkedList<T> list, bool reversed = false)
         {
-            if (list is null)
-                ThrowListNull();
+            if (list is null) Throw.ArgumentNullException(nameof(list));
 
             if (list.Count == 0)
                 return;
@@ -580,12 +550,10 @@ namespace NetFabric
             count += list.count;
             version++;
 
-            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
-
             void Assign()
             {
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -604,7 +572,7 @@ namespace NetFabric
             void AssignReversed()
             {
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -623,8 +591,7 @@ namespace NetFabric
 
         public void AddLastFrom(DoublyLinkedList<T> list, bool reversed = false)
         {
-            if (list is null)
-                ThrowListNull();
+            if (list is null) Throw.ArgumentNullException(nameof(list));
 
             if (list.Count == 0)
                 return;
@@ -651,12 +618,10 @@ namespace NetFabric
             version++;
             list.Invalidate();
 
-            void ThrowListNull() => throw new ArgumentNullException(nameof(list));
-
             void Assign()
             {
                 var current = list.head;
-                while (current is object)
+                while (current is not null)
                 {
                     current.List = this;
 
@@ -677,7 +642,7 @@ namespace NetFabric
                 tempHead = tempTail = current;
 
                 current = next;
-                while (current is object)
+                while (current is not null)
                 {
                     next = current.Next;
 
@@ -695,7 +660,7 @@ namespace NetFabric
         public void Clear()
         {
             var current = head;
-            while (current is object)
+            while (current is not null)
             {
                 var temp = current;
                 current = current.Next;
@@ -713,12 +678,12 @@ namespace NetFabric
         }
 
         [Pure]
-        public Node Find(T value)
+        public Node? Find(T value)
         {
             var node = head;
             if (value == null)
             {
-                while (node is object)
+                while (node is not null)
                 {
                     if (node.Value == null)
                         return node;
@@ -729,7 +694,7 @@ namespace NetFabric
             else
             {
                 var comparer = EqualityComparer<T>.Default;
-                while (node is object)
+                while (node is not null)
                 {
                     if (comparer.Equals(node.Value, value))
                         return node;
@@ -741,12 +706,12 @@ namespace NetFabric
         }
 
         [Pure]
-        public Node FindLast(T value)
+        public Node? FindLast(T value)
         {
             var node = tail;
             if (value == null)
             {
-                while (node is object)
+                while (node is not null)
                 {
                     if (node.Value == null)
                         return node;
@@ -757,7 +722,7 @@ namespace NetFabric
             else
             {
                 var comparer = EqualityComparer<T>.Default;
-                while (node is object)
+                while (node is not null)
                 {
                     if (comparer.Equals(node.Value, value))
                         return node;
@@ -769,12 +734,12 @@ namespace NetFabric
         }
 
         [Pure]
-        public ForwardEnumeration EnumerateForward() =>
-            new ForwardEnumeration(this);
+        public ForwardEnumeration Forward =>
+            new(this);
 
         [Pure]
-        public ReverseEnumeration EnumerateReversed() =>
-            new ReverseEnumeration(this);
+        public ReverseEnumeration Backward =>
+            new(this);
 
         public bool Remove(T value)
         {
@@ -856,8 +821,7 @@ namespace NetFabric
 
         public void RemoveFirst()
         {
-            if (IsEmpty)
-                ThrowInvalidOperation();
+            if (IsEmpty) Throw.InvalidOperationException();
 
             var node = head;
             if (tail == node)
@@ -873,14 +837,11 @@ namespace NetFabric
             node.Invalidate();
             count--;
             version++;
-
-            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         public void RemoveLast()
         {
-            if (IsEmpty)
-                ThrowInvalidOperation();
+            if (IsEmpty) Throw.InvalidOperationException();
 
             var node = tail;
             if (head == node)
@@ -896,8 +857,6 @@ namespace NetFabric
             node.Invalidate();
             count--;
             version++;
-
-            static void ThrowInvalidOperation() => throw new InvalidOperationException();
         }
 
         [Pure]
@@ -912,7 +871,7 @@ namespace NetFabric
             };
 
             var current = head;
-            if (current is object)
+            if (current is not null)
             {
                 list.head = list.tail = new Node
                 {
@@ -922,7 +881,7 @@ namespace NetFabric
                     Previous = null,
                 };
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -952,7 +911,7 @@ namespace NetFabric
             };
 
             var current = head;
-            if (current is object)
+            if (current is not null)
             {
                 list.head = list.tail = new Node
                 {
@@ -962,7 +921,7 @@ namespace NetFabric
                     Previous = null,
                 };
                 current = current.Next;
-                while (current is object)
+                while (current is not null)
                 {
                     var node = new Node
                     {
@@ -987,7 +946,7 @@ namespace NetFabric
 
             Node temp;
             var current = head;
-            while (current is object)
+            while (current is not null)
             {
                 temp = current.Next;
                 current.Next = current.Previous;
@@ -999,5 +958,22 @@ namespace NetFabric
             tail = temp;
             version++;
         }
+        
+        static Node? ForwardOffset(Node? node, int offset)
+        {
+            for (var counter = 0; counter < offset; counter++)
+                node = node!.Next;
+
+            return node;
+        }
+                
+        static Node? ReverseOffset(Node? node, int offset)
+        {
+            for (var counter = 0; counter < offset; counter++)
+                node = node!.Previous;
+
+            return node;
+        }
+
     }
 }

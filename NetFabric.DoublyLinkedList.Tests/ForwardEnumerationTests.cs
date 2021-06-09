@@ -8,11 +8,11 @@ namespace NetFabric.Tests
     public class ForwardEnumerationTests
     {
         public static TheoryData<IReadOnlyList<int>> Data =>
-            new TheoryData<IReadOnlyList<int>>
+            new()
             {
-                new int[] { },
-                new int[] { 1 },
-                new int[] { 1, 2, 3, 4, 5 },
+                Array.Empty<int>(),
+                new[] { 1 },
+                new[] { 1, 2, 3, 4, 5 },
             };
 
         [Theory]
@@ -23,7 +23,7 @@ namespace NetFabric.Tests
             var list = new DoublyLinkedList<int>(collection);
 
             // Act
-            var enumeration = list.EnumerateForward();
+            var enumeration = list.Forward;
 
             // Assert
             enumeration.Must()

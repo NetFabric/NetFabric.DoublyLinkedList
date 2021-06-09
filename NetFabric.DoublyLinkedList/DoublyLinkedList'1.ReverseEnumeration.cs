@@ -9,121 +9,103 @@ namespace NetFabric
 {
     public partial class DoublyLinkedList<T>
     {
-        public readonly struct ReverseEnumeration : IValueReadOnlyCollection<T, ReverseEnumeration.DisposableEnumerator>
+        public readonly struct ReverseEnumeration 
+            : IValueReadOnlyList<T, ReverseEnumeration.DisposableEnumerator>
         {
             readonly DoublyLinkedList<T> list;
 
             internal ReverseEnumeration(DoublyLinkedList<T> list)
-            {
-                this.list = list;
-            }
+                => this.list = list;
 
             public int Count =>
                 list.count;
+            
+            public T this[int index]
+            {
+                get
+                {
+                    if ((uint)index >= (uint)Count) 
+                        Throw.ArgumentOutOfRangeException(nameof(index));
+                    return index < Count / 2 
+                        ? ReverseOffset(list.Last, index)!.Value 
+                        : ForwardOffset(list.First, Count - index - 1)!.Value;
+                }
+            }
 
             [Pure]
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public readonly Enumerator GetEnumerator() =>
-                new Enumerator(list);
+            public Enumerator GetEnumerator() =>
+                new(list);
 
-            readonly DisposableEnumerator IValueEnumerable<T, DisposableEnumerator>.GetEnumerator() =>
+            DisposableEnumerator IValueEnumerable<T, DisposableEnumerator>.GetEnumerator() =>
+                new(list);
+
+            IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
                 new DisposableEnumerator(list);
 
-            readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() =>
-                new DisposableEnumerator(list);
-
-            readonly IEnumerator IEnumerable.GetEnumerator() =>
+            IEnumerator IEnumerable.GetEnumerator() =>
                 new DisposableEnumerator(list);
 
             public struct Enumerator
             {
                 readonly DoublyLinkedList<T> list;
                 readonly int version;
-                Node current;
-                EnumeratorState state;
+                Node? current;
 
                 internal Enumerator(DoublyLinkedList<T> list)
                 {
                     this.list = list;
                     version = list.version;
                     current = null;
-                    state = list.IsEmpty ? EnumeratorState.Empty : EnumeratorState.First;
                 }
 
                 public readonly T Current
-                {
-                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                    get => current.Value;
-                }
+                    => current!.Value;
 
                 public bool MoveNext()
                 {
-                    if (version != list.version)
-                        ThrowInvalidOperation();
-
-                    switch (state)
-                    {
-                        case EnumeratorState.Normal:
-                            current = current.Previous;
-                            return current is object;
-                        case EnumeratorState.First:
-                            current = list.tail;
-                            state = EnumeratorState.Normal;
-                            return true;
-                        default:
-                            return false;
-                    }
-
-                    static void ThrowInvalidOperation() => throw new InvalidOperationException();
+                    if (version != list.version) Throw.InvalidOperationException();
+                    current = current is null 
+                        ? list.Last 
+                        : current.Previous;
+                    return current is not null;
                 }
             }
 
-            public struct DisposableEnumerator : IEnumerator<T>
+            public struct DisposableEnumerator 
+                : IEnumerator<T>
             {
                 readonly DoublyLinkedList<T> list;
                 readonly int version;
-                Node current;
-                EnumeratorState state;
+                Node? current;
 
                 internal DisposableEnumerator(DoublyLinkedList<T> list)
                 {
                     this.list = list;
                     version = list.version;
                     current = null;
-                    state = list.IsEmpty ? EnumeratorState.Empty : EnumeratorState.First;
                 }
 
                 public readonly T Current
-                {
-                    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                    get => current.Value;
-                }
-                readonly object IEnumerator.Current => current.Value;
+                    => current!.Value;
+                readonly object? IEnumerator.Current 
+                    => current!.Value;
 
                 public bool MoveNext()
                 {
-                    if (version != list.version)
-                        ThrowInvalidOperation();
-
-                    switch (state)
-                    {
-                        case EnumeratorState.Normal:
-                            current = current.Previous;
-                            return current is object;
-                        case EnumeratorState.First:
-                            current = list.tail;
-                            state = EnumeratorState.Normal;
-                            return true;
-                        default:
-                            return false;
-                    }
-
-                    static void ThrowInvalidOperation() => throw new InvalidOperationException();
+                    if (version != list.version) 
+                        Throw.InvalidOperationException();
+                    current = current is null 
+                        ? list.Last 
+                        : current.Previous;
+                    return current is not null;
                 }
 
-                public readonly void Reset() => throw new NotSupportedException();
+                public readonly void Reset() 
+                    => Throw.NotSupportedException();
 
-                public readonly void Dispose() { }
+                public readonly void Dispose() 
+                { }
             }
         }
     }

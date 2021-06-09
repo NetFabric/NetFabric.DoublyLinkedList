@@ -8,7 +8,7 @@ namespace NetFabric.Tests
     public class FindTests
     {
         public static TheoryData<IReadOnlyList<int?>, int?, bool> Data =>
-            new TheoryData<IReadOnlyList<int?>, int?, bool>
+            new()
             {
                 { new int?[] { },                   null,   false },
                 { new int?[] { },                   1,      false },
@@ -50,7 +50,7 @@ namespace NetFabric.Tests
         }
 
         public static TheoryData<IReadOnlyList<int?>, int?> HeadData =>
-            new TheoryData<IReadOnlyList<int?>, int?>
+            new()
             {
                 { new int?[] { null, null, null },  null },
                 { new int?[] { 1, 1, 1 },           1 },

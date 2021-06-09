@@ -8,11 +8,11 @@ namespace NetFabric.Tests
     public class ReverseTests
     {
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> Data =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },                new int[] { } },
-                { new int[] { 1 },              new int[] { 1 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { 5, 4, 3, 2, 1 } },
+                { Array.Empty<int>(),       Array.Empty<int>() },
+                { new[] { 1 },              new[] { 1 } },
+                { new[] { 1, 2, 3, 4, 5 },  new[] { 5, 4, 3, 2, 1 } },
             };
 
         [Theory]
@@ -28,10 +28,10 @@ namespace NetFabric.Tests
             // Assert
             result.Version.Must()
                 .BeEqualTo(0);
-            result.EnumerateForward().Must()
+            result.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            result.EnumerateReversed().Must()
+            result.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(collection);
         }
@@ -52,10 +52,10 @@ namespace NetFabric.Tests
                 list.Version.Must().BeEqualTo(version);
             else
                 list.Version.Must().BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(collection);
         }
