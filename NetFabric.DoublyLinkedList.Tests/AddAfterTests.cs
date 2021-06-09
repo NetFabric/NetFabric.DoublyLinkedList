@@ -29,7 +29,7 @@ namespace NetFabric.Tests
         {
             // Arrange
             var list = new DoublyLinkedList<int>();
-            var anotherList = new DoublyLinkedList<int>(new int[] { 1 });
+            var anotherList = new DoublyLinkedList<int>(new[] { 1 });
             var node = anotherList.Find(1);
 
             // Act
@@ -41,10 +41,10 @@ namespace NetFabric.Tests
         }
 
         public static TheoryData<IReadOnlyList<int>, int, int, IReadOnlyList<int>> ItemData =>
-            new TheoryData<IReadOnlyList<int>, int, int, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { 1 },      1, 2, new int[] { 1, 2 } },
-                { new int[] { 1, 3 },   1, 2, new int[] { 1, 2, 3 } },
+                { new[] { 1 },      1, 2, new[] { 1, 2 } },
+                { new[] { 1, 3 },   1, 2, new[] { 1, 2, 3 } },
             };
 
         [Theory]
@@ -62,10 +62,10 @@ namespace NetFabric.Tests
             // Assert
             list.Version.Must()
                 .BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }

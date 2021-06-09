@@ -9,27 +9,27 @@ namespace NetFabric.Tests
     public class RemoveTests
     {
         public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveItemData =>
-            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
+            new()
             {
-                { new int[] { },                1, false,   new int[] { } },
-                { new int[] { 1 },              2, false,   new int[] { 1 } },
-                { new int[] { 1 },              1, true,    new int[] { } },
-                { new int[] { 1, 2, 3, 4, 5 },  6, false,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  1, true,    new int[] { 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  3, true,    new int[] { 1, 2, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  5, true,    new int[] { 1, 2, 3, 4 } },
+                { Array.Empty<int>(),                1, false,   Array.Empty<int>() },
+                { new[] { 1 },              2, false,   new[] { 1 } },
+                { new[] { 1 },              1, true,    Array.Empty<int>() },
+                { new[] { 1, 2, 3, 4, 5 },  6, false,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  1, true,    new[] { 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  3, true,    new[] { 1, 2, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  5, true,    new[] { 1, 2, 3, 4 } },
             };
 
         public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveFirstItemData =>
-            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
+            new()
             {
-                { new int[] { 1, 2, 3, 4, 5, 1 },  1, true, new int[] { 2, 3, 4, 5, 1 } },
+                { new[] { 1, 2, 3, 4, 5, 1 },  1, true, new[] { 2, 3, 4, 5, 1 } },
             };
 
         public static TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>> RemoveLastItemData =>
-            new TheoryData<IReadOnlyList<int>, int, bool, IReadOnlyCollection<int>>
+            new()
             {
-                { new int[] { 1, 2, 3, 4, 5, 1 },  1, true, new int[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5, 1 },  1, true, new[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -50,10 +50,10 @@ namespace NetFabric.Tests
                 list.Version.Must().BeNotEqualTo(version);
             else
                 list.Version.Must().BeEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection.Reverse());
         }
@@ -77,26 +77,26 @@ namespace NetFabric.Tests
                 list.Version.Must().BeNotEqualTo(version);
             else
                 list.Version.Must().BeEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection.Reverse());
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>> RemoveFirstData =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>>
+            new()
             {
-                { new int[] { 1 },              new int[] { } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { 2, 3, 4, 5 } },
+                { new[] { 1 },              Array.Empty<int>() },
+                { new[] { 1, 2, 3, 4, 5 },  new[] { 2, 3, 4, 5 } },
             };
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>> RemoveLastData =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyCollection<int>>
+            new()
             {
-                { new int[] { 1 },              new int[] { } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { 1, 2, 3, 4 } },
+                { new[] { 1 },              Array.Empty<int>() },
+                { new[] { 1, 2, 3, 4, 5 },  new[] { 1, 2, 3, 4 } },
             };
 
         [Theory]
@@ -113,10 +113,10 @@ namespace NetFabric.Tests
             // Assert
             list.Version.Must()
                 .BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection.Reverse());
         }
@@ -135,10 +135,10 @@ namespace NetFabric.Tests
             // Assert
             list.Version.Must()
                 .BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expectedCollection.Reverse());
         }

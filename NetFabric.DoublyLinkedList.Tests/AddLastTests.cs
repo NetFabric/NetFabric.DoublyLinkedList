@@ -57,11 +57,11 @@ namespace NetFabric.Tests
         }
 
         public static TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>> ItemData =>
-            new TheoryData<IReadOnlyList<int>, int, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },            1, new int[] { 1 } }, 
-                { new int[] { 1 },          2, new int[] { 1, 2 } },
-                { new int[] { 1, 2, 3, 4 }, 5, new int[] { 1, 2, 3, 4, 5 } },
+                { Array.Empty<int>(),   1, new[] { 1 } }, 
+                { new[] { 1 },          2, new[] { 1, 2 } },
+                { new[] { 1, 2, 3, 4 }, 5, new[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -78,26 +78,26 @@ namespace NetFabric.Tests
             // Assert
             list.Version.Must()
                 .BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>> CollectionData =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },                new int[] { },                  false,  new int[] { } },
-                { new int[] { },                new int[] { 1 },                true,   new int[] { 1 } },
-                { new int[] { },                new int[] { 1, 2, 3, 4, 5 },    true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1 },              new int[] { },                  false,  new int[] { 1 } },
-                { new int[] { 1 },              new int[] { 2 },                true,   new int[] { 1, 2 } },
-                { new int[] { 1 },              new int[] { 2, 3, 4, 5 },       true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  false,  new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4 },     new int[] { 5 },                true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3 },        new int[] { 4, 5 },             true,   new int[] { 1, 2, 3, 4, 5 } },
+                { Array.Empty<int>(),       Array.Empty<int>(),         false,  Array.Empty<int>() },
+                { Array.Empty<int>(),       new[] { 1 },                true,   new[] { 1 } },
+                { Array.Empty<int>(),       new[] { 1, 2, 3, 4, 5 },    true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1 },              Array.Empty<int>(),         false,  new[] { 1 } },
+                { new[] { 1 },              new[] { 2 },                true,   new[] { 1, 2 } },
+                { new[] { 1 },              new[] { 2, 3, 4, 5 },       true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  Array.Empty<int>(),         false,  new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4 },     new[] { 5 },                true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3 },        new[] { 4, 5 },             true,   new[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -116,10 +116,10 @@ namespace NetFabric.Tests
                 list.Version.Must().BeNotEqualTo(version);
             else
                 list.Version.Must().BeEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
@@ -140,35 +140,35 @@ namespace NetFabric.Tests
                 list.Version.Must().BeNotEqualTo(version);
             else
                 list.Version.Must().BeEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, bool, IReadOnlyList<int>> ListData =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, bool, bool, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },                new int[] { },                  false,  false,  new int[] { } },
-                { new int[] { },                new int[] { 1 },                false,  true,   new int[] { 1 } },
-                { new int[] { },                new int[] { 1, 2, 3, 4, 5 },    false,  true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1 },              new int[] { },                  false,  false,  new int[] { 1 } },
-                { new int[] { 1 },              new int[] { 2 },                false,  true,   new int[] { 1, 2 } },
-                { new int[] { 1 },              new int[] { 2, 3, 4, 5 },       false,  true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  false,  false,  new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4 },     new int[] { 5 },                false,  true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3 },        new int[] { 4, 5 },             false,  true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { },                new int[] { },                  true,   false,  new int[] { } },
-                { new int[] { },                new int[] { 1 },                true,   true,   new int[] { 1 } },
-                { new int[] { },                new int[] { 1, 2, 3, 4, 5 },    true,   true,   new int[] { 5, 4, 3, 2, 1 } },
-                { new int[] { 1 },              new int[] { },                  true,   false,  new int[] { 1 } },
-                { new int[] { 1 },              new int[] { 2 },                true,   true,   new int[] { 1, 2 } },
-                { new int[] { 1 },              new int[] { 2, 3, 4, 5 },       true,   true,   new int[] { 1, 5, 4, 3, 2 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  true,   false,  new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4 },     new int[] { 5 },                true,   true,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3 },        new int[] { 4, 5 },             true,   true,   new int[] { 1, 2, 3, 5, 4 } },
+                { Array.Empty<int>(),       Array.Empty<int>(),         false,  false,  Array.Empty<int>() },
+                { Array.Empty<int>(),       new[] { 1 },                false,  true,   new[] { 1 } },
+                { Array.Empty<int>(),       new[] { 1, 2, 3, 4, 5 },    false,  true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1 },              Array.Empty<int>(),         false,  false,  new[] { 1 } },
+                { new[] { 1 },              new[] { 2 },                false,  true,   new[] { 1, 2 } },
+                { new[] { 1 },              new[] { 2, 3, 4, 5 },       false,  true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  Array.Empty<int>(),         false,  false,  new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4 },     new[] { 5 },                false,  true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3 },        new[] { 4, 5 },             false,  true,   new[] { 1, 2, 3, 4, 5 } },
+                { Array.Empty<int>(),       Array.Empty<int>(),         true,   false,  Array.Empty<int>() },
+                { Array.Empty<int>(),       new[] { 1 },                true,   true,   new[] { 1 } },
+                { Array.Empty<int>(),       new[] { 1, 2, 3, 4, 5 },    true,   true,   new[] { 5, 4, 3, 2, 1 } },
+                { new[] { 1 },              Array.Empty<int>(),         true,   false,  new[] { 1 } },
+                { new[] { 1 },              new[] { 2 },                true,   true,   new[] { 1, 2 } },
+                { new[] { 1 },              new[] { 2, 3, 4, 5 },       true,   true,   new[] { 1, 5, 4, 3, 2 } },
+                { new[] { 1, 2, 3, 4, 5 },  Array.Empty<int>(),         true,   false,  new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4 },     new[] { 5 },                true,   true,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3 },        new[] { 4, 5 },             true,   true,   new[] { 1, 2, 3, 5, 4 } },
             };
 
         [Theory]
@@ -188,10 +188,10 @@ namespace NetFabric.Tests
                 left.Version.Must().BeNotEqualTo(version);
             else
                 left.Version.Must().BeEqualTo(version);
-            left.EnumerateForward().Must()
+            left.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            left.EnumerateReversed().Must()
+            left.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
         }
@@ -213,13 +213,13 @@ namespace NetFabric.Tests
                 left.Version.Must().BeNotEqualTo(version);
             else
                 left.Version.Must().BeEqualTo(version);
-            left.EnumerateForward().Must()
+            left.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            left.EnumerateReversed().Must()
+            left.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());
-            right.EnumerateForward().Must()
+            right.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEmpty();
         }

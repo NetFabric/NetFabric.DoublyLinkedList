@@ -2,110 +2,108 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 
 namespace NetFabric.Benchmark
 {
+    [MarkdownExporterAttribute.GitHub]
+    [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
+    [CategoriesColumn]
     [MemoryDiagnoser]
     public class EnumerationBenchmark
     {
-        const int count = 10_000;
-        LinkedList<int> linkedList;
-        DoublyLinkedList<int> doublyLinkedList;
+        LinkedList<int>? linkedList;
+        DoublyLinkedList<int>? doublyLinkedList;
+        
+        [Params(100_000)]
+        public int Count { get; set; }
 
         [GlobalSetup]
         public void GlobalSetup()
         {
-            var data = Enumerable.Range(0, count);
+            var data = Enumerable.Range(0, Count);
             linkedList = new LinkedList<int>(data);
             doublyLinkedList = new DoublyLinkedList<int>(data);
         }
         
+        [BenchmarkCategory("Forward")]
         [Benchmark(Baseline = true)]
         public int LinkedList_Forward_While() 
         {
-            var count = 0;
-            var current = linkedList.First;
-            while (current is object)
-            {
-                count += current.Value;
-                current = current.Next;
-            }
-            return count;
+            var sum = 0;
+            for (var current = linkedList!.First; current is not null; current = current.Next)
+                sum += current.Value;
+            return sum;
         }
 
+        [BenchmarkCategory("Forward")]
         [Benchmark]
         public int LinkedList_Forward_ForEach() 
         {
-            var count = 0;
-            foreach (var value in linkedList)
-                count += value;
-            return count;
+            var sum = 0;
+            foreach (var value in linkedList!)
+                sum += value;
+            return sum;
         }
 
-        [Benchmark]
+        [BenchmarkCategory("Reverse")]
+        [Benchmark(Baseline = true)]
         public int LinkedList_Reverse_While() 
         {
-            var count = 0;
-            var current = linkedList.Last;
-            while (current is object)
-            {
-                count += current.Value;
-                current = current.Previous;
-            }
-            return count;
+            var sum = 0;
+            for (var current = linkedList!.Last; current is not null; current = current.Previous)
+                sum += current.Value;
+            return sum;
         }
 
+        [BenchmarkCategory("Reverse")]
         [Benchmark]
         public int LinkedList_Reverse_ForEach() 
         {
-            var count = 0;
-            foreach (var value in linkedList.Reverse())
-                count += value;
-            return count;
+            var sum = 0;
+            foreach (var value in linkedList!.Reverse())
+                sum += value;
+            return sum;
         }
         
+        [BenchmarkCategory("Forward")]
         [Benchmark]
         public int DoublyLinkedList_Forward_While() 
         {
-            var count = 0;
-            var current = doublyLinkedList.First;
-            while (current is object)
-            {
-                count += current.Value;
-                current = current.Next;
-            }
-            return count;
+            var sum = 0;
+            for (var current = doublyLinkedList!.First; current is not null; current = current.Next)
+                sum += current.Value;
+            return sum;
         }
 
+        [BenchmarkCategory("Forward")]
         [Benchmark]
         public int DoublyLinkedList_Forward_ForEach() 
         {
-            var count = 0;
-            foreach (var value in doublyLinkedList.EnumerateForward())
-                count += value;
-            return count;
+            var sum = 0;
+            foreach (var value in doublyLinkedList!.Forward)
+                sum += value;
+            return sum;
         }
         
+        [BenchmarkCategory("Reverse")]
         [Benchmark]
         public int DoublyLinkedList_Reverse_While() 
         {
-            var count = 0;
-            var current = doublyLinkedList.Last;
-            while (current is object)
-            {
-                count += current.Value;
-                current = current.Previous;
-            }
-            return count;
+            var sum = 0;
+            for (var current = doublyLinkedList!.Last; current is not null; current = current.Previous)
+                sum += current.Value;
+            return sum;
         }
 
+        [BenchmarkCategory("Reverse")]
         [Benchmark]
         public int DoublyLinkedList_Reverse_ForEach() 
         {
-            var count = 0;
-            foreach (var value in doublyLinkedList.EnumerateReversed())
-                count += value;
-            return count;
+            var sum = 0;
+            foreach (var value in doublyLinkedList!.Backward)
+                sum += value;
+            return sum;
         }
     }
 }

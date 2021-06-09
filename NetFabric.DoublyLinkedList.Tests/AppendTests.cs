@@ -39,16 +39,16 @@ namespace NetFabric.Tests
         }
 
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>> AppendData =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },                new int[] { },                  new int[] { } },
-                { new int[] { },                new int[] { 1 } ,               new int[] { 1 } },
-                { new int[] { 1 },              new int[] { },                  new int[] { 1 } },
-                { new int[] { },                new int[] { 1, 2, 3, 4, 5 } ,   new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { },                  new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1 },              new int[] { 2, 3, 4, 5 },       new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3, 4 },     new int[] { 5 } ,               new int[] { 1, 2, 3, 4, 5 } },
-                { new int[] { 1, 2, 3 },        new int[] { 4, 5, 6 },          new int[] { 1, 2, 3, 4, 5, 6 } },
+                { Array.Empty<int>(),       Array.Empty<int>(),         Array.Empty<int>() },
+                { Array.Empty<int>(),       new[] { 1 } ,               new[] { 1 } },
+                { new[] { 1 },              Array.Empty<int>(),         new[] { 1 } },
+                { Array.Empty<int>(),       new[] { 1, 2, 3, 4, 5 } ,   new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4, 5 },  Array.Empty<int>(),         new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1 },              new[] { 2, 3, 4, 5 },       new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3, 4 },     new[] { 5 } ,               new[] { 1, 2, 3, 4, 5 } },
+                { new[] { 1, 2, 3 },        new[] { 4, 5, 6 },          new[] { 1, 2, 3, 4, 5, 6 } },
             };
 
         [Theory]
@@ -67,20 +67,20 @@ namespace NetFabric.Tests
             // Assert
             leftList.Version.Must()
                 .BeEqualTo(leftVersion);
-            leftList.EnumerateForward().Must()
+            leftList.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(left);
 
             rightList.Version.Must()
                 .BeEqualTo(rightVersion);
-            rightList.EnumerateForward().Must()
+            rightList.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(right);
 
-            result.EnumerateForward().Must()
+            result.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            result.EnumerateReversed().Must()
+            result.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected.Reverse());        
         }

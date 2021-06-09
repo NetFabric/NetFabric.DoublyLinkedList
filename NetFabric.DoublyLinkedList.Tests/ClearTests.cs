@@ -8,11 +8,11 @@ namespace NetFabric.Tests
     public class ClearTests
     {
         public static TheoryData<IReadOnlyList<int>> Data =>
-            new TheoryData<IReadOnlyList<int>>
+            new()
             {
-                new int[] { },
-                new int[] { 1 },
-                new int[] { 1, 2, 3, 4, 5 },
+                Array.Empty<int>(),
+                new[] { 1 },
+                new[] { 1, 2, 3, 4, 5 },
             };
 
         [Theory]
@@ -29,10 +29,10 @@ namespace NetFabric.Tests
             // Assert
             list.Version.Must()
                 .BeNotEqualTo(version);
-            list.EnumerateForward().Must()
+            list.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEmpty();
-            list.EnumerateReversed().Must()
+            list.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEmpty();
         }

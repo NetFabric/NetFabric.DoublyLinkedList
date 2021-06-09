@@ -9,11 +9,11 @@ namespace NetFabric.Tests
     public class CloneTests
     {
         public static TheoryData<IReadOnlyList<int>, IReadOnlyList<int>> Data =>
-            new TheoryData<IReadOnlyList<int>, IReadOnlyList<int>>
+            new()
             {
-                { new int[] { },                new int[] { } },
-                { new int[] { 1 },              new int[] { 1 } },
-                { new int[] { 1, 2, 3, 4, 5 },  new int[] { 1, 2, 3, 4, 5 } },
+                { Array.Empty<int>(),       Array.Empty<int>() },
+                { new[] { 1 },              new[] { 1 } },
+                { new[] { 1, 2, 3, 4, 5 },  new[] { 1, 2, 3, 4, 5 } },
             };
 
         [Theory]
@@ -29,10 +29,10 @@ namespace NetFabric.Tests
             // Assert
             result.Version.Must()
                 .BeEqualTo(0);
-            result.EnumerateForward().Must()
+            result.Forward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(expected);
-            result.EnumerateReversed().Must()
+            result.Backward.Must()
                 .BeEnumerableOf<int>()
                 .BeEqualTo(collection.Reverse());
         }
