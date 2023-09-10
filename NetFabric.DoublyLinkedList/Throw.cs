@@ -28,6 +28,11 @@ namespace NetFabric
 
         [DoesNotReturn]
         [MethodImpl(MethodImplOptions.NoInlining)]
+        public static T InvalidOperationException<T>(string? message = default)
+            => throw new InvalidOperationException(message);
+
+        [DoesNotReturn]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void NotSupportedException()
             => throw new NotSupportedException();
 
