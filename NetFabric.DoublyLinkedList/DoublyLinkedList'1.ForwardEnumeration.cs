@@ -18,6 +18,9 @@ namespace NetFabric
             internal ForwardEnumeration(DoublyLinkedList<T> list)
                 => this.list = list;
 
+            public WhereForwardEnumeration Where(Func<T, bool> predicate)
+                => new(list, predicate);  
+
             public int Count =>
                 list.count;
             
@@ -102,12 +105,12 @@ namespace NetFabric
                     return current is not null;
                 }
 
-                public readonly void Reset() 
-                    => Throw.NotSupportedException();
+                public void Reset() 
+                    => current = null;
 
                 public readonly void Dispose() 
                 { }
-            }
+            }  
         }
     }
 }

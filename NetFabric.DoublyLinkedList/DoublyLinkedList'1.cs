@@ -854,7 +854,7 @@ namespace NetFabric
                 tail = node.Previous;
                 tail.Next = null;
             }
-            node.Invalidate();
+            node!.Invalidate();
             count--;
             version++;
         }
@@ -944,7 +944,7 @@ namespace NetFabric
             if (count < 2)
                 return;
 
-            Node temp;
+            Node? temp;
             var current = head;
             while (current is not null)
             {
