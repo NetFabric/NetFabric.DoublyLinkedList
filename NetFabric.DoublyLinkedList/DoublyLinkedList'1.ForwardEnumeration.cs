@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
@@ -17,6 +16,120 @@ namespace NetFabric
 
             internal ForwardEnumeration(DoublyLinkedList<T> list)
                 => this.list = list;
+
+            public WhereForwardEnumeration Where(Func<T, bool> predicate)
+                => new(list, predicate);  
+
+            public bool Any()
+                => !list.IsEmpty;
+
+            public bool Any(Func<T, bool> predicate)
+            {
+                var current = list.First;
+                while (current is not null)
+                {
+                    if (predicate(current.Value))
+                        return true;
+                    current = current.Next;
+                }
+                return false;
+            }
+
+            public T First()
+            {
+                if (list.IsEmpty)
+                    Throw.InvalidOperationException(Resources.NoElements);
+                return list.First!.Value;
+            }
+
+            public T First(Func<T, bool> predicate)
+            {
+                var current = list.First;
+                while (current is not null)
+                {
+                    if (predicate(current.Value))
+                        return current.Value;
+                    current = current.Next;
+                }
+                return Throw.InvalidOperationException<T>(Resources.NoMatches);
+            }
+
+            public T? FirstOrDefault()
+                => list.First is not null 
+                    ? list.First.Value 
+                    : default;
+
+            public T? FirstOrDefault(Func<T, bool> predicate)
+            {
+                var current = list.First;
+                while (current is not null)
+                {
+                    if (predicate(current.Value))
+                        return current.Value;
+                    current = current.Next;
+                }
+                return default;
+            }
+
+            public T Single()
+            {
+                if (list.IsEmpty)
+                    Throw.InvalidOperationException(Resources.NoElements);
+                if (list.First != list.Last)
+                    Throw.InvalidOperationException(Resources.MoreThanOneElement);
+                return list.First!.Value;
+            }
+
+            public T Single(Func<T, bool> predicate)
+            {
+                var current = list.First;
+                while (current is not null)
+                {
+                    if (predicate(current.Value))
+                    {
+                        var value = current.Value;
+
+                        // found first, keep going until end or find second
+                        current = current.Next;
+                        while (current is not null)
+                        {
+                            if (predicate(current.Value))
+                                Throw.InvalidOperationException(Resources.MoreThanOneMatch);
+                        }
+
+                        return value;
+                    }
+                }
+                return Throw.InvalidOperationException<T>(Resources.NoMatches);
+            }
+
+            public T? SingleOrDefault()
+                => list.First is not null 
+                    ? Single() 
+                    : default;  
+
+            public T? SingleOrDefault(Func<T, bool> predicate)
+            {
+                var current = list.First;
+                while (current is not null)
+                {
+                    if (predicate(current.Value))
+                    {
+                        var value = current.Value;
+
+                        // found first, keep going until end or find second
+                        current = current.Next;
+                        while (current is not null)
+                        {
+                            if (predicate(current.Value))
+                                Throw.InvalidOperationException(Resources.MoreThanOneMatch);
+                        }
+
+                        return value;
+                    }
+                }
+                return default;
+            }
 
             public int Count =>
                 list.count;
@@ -102,12 +215,12 @@ namespace NetFabric
                     return current is not null;
                 }
 
-                public readonly void Reset() 
-                    => Throw.NotSupportedException();
+                public void Reset() 
+                    => current = null;
 
                 public readonly void Dispose() 
                 { }
-            }
+            }  
         }
     }
 }
